@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  margin: 4rem 0rem;
+  margin: 2rem 0rem;
 `;
 
 export const Card = styled.div`
@@ -9,11 +9,13 @@ export const Card = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
-
+  border-radius: 3px;
+  
   img{
     position: absolute;
     left: 0;
   }
+
   p{
     position: absolute;
     z-index: 10;

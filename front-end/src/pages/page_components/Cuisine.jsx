@@ -22,6 +22,7 @@ const Cuisine = () => {
     console.log(params.type)
   }, [params.type])
   
+
   return (
     <>
     {/* Motion.div component added in styled-components below */}
@@ -50,6 +51,8 @@ const Cuisine = () => {
   )
 }
 
+export default Cuisine
+
 const Grid = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
@@ -58,15 +61,19 @@ const Grid = styled(motion.div)`
 const Card = styled.div`
   img {
     width: 100%;
-    border-radius: 2rem;
+    border-radius: 3px;
+    box-shadow: 0px 1px 5px black;
+    transition: 300ms;
+  &:hover{
+    transform: scaleX(1.02) scaleY(1.02);
+  }
   }
   a { 
     text-decoration: none;
   }
   h4 {
     text-align: center;
-    padding: 0.5rem;
+    color: grey;
+    font-size: 1rem;
   }
 `;
-
-export default Cuisine

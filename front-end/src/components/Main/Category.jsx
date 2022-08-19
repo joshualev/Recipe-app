@@ -1,14 +1,11 @@
 import {NavLink} from 'react-router-dom';
-import styled from "styled-components"
-
-// import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
-// import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
+import styled from "styled-components";
 
 
 function Category() {
   
   return (
-    <div>
+    <List>
       <NavLink to='/cuisine/italian'>
         <h4>Italian</h4>
       </NavLink>
@@ -33,7 +30,7 @@ function Category() {
       <NavLink to='/cuisine/korean'> 
         <h4>African</h4>
       </NavLink>
-    </div>
+    </List>
   )
 }
 
