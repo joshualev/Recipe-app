@@ -1,12 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {Container} from './globalStyles'
+import Pages from './pages/Pages.jsx'
+import Category from './components/Main/Category'
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
+      <Container> 
+        <Category/>
+        <Pages/>
+      </Container>
   );
 }
 
