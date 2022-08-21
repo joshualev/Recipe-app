@@ -33,7 +33,7 @@ const Cuisine = () => {
       // Fade out on leaving page
       exit={{opacity:0}}
       // animation duration(s)
-      transition={{duration: 0.5}}
+      transition={{duration: 0.8, ease: 'easeOut'}}
     >
       {cuisine.map((recipe) => {
         return(

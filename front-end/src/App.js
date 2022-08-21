@@ -9,7 +9,6 @@ function App() {
   return (
       <Container> 
         <Navbar/>
-        {/* <AdvancedSearch/> */}
         <Category/>
         <Pages/>
       </Container>

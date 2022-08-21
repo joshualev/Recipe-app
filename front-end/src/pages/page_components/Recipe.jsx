@@ -2,138 +2,192 @@ import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {motion} from 'framer-motion';
 import styled from 'styled-components';
+import { ThemeProvider, createTheme} from '@mui/material/styles';
 
-
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Container, Card, CardMedia, Button } from '@mui/material';
 
 const Recipe = () => {
   const params = useParams();
   const [recipeData, setRecipeData] = useState({});
-  const [activeTab, setActiveTab] = useState('instructions');
 
   const fetchRecipe = async () => {
     const response = await fetch (`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`)
     const data = await response.json()
     setRecipeData(data);
-    data.analyzedInstructions.map((equipment)=>{
-      console.log(equipment)
-    })
-      console.log(data)
-  
-
+      console.log('data', data)
   }
 
   useEffect(() => {
     fetchRecipe()
   },[params.name]);
   
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#5FC25F',
+      },
+      neutral: {
+        main: '#F4FBF4',
+      },
+    },
+  });
+  
+  // Animation used to stagger children on page enter
+  const variants = {
+    hidden: { opacity: 0},
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const item = {
+    hidden: {
+      opacity: 0,
+      x: -100,
+    },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+      },
+    },
+  };
+
+  
   return (
-    
-    <Wrapper
-    // Fade in on page enter
-    animate={{opacity:1}}
-    initial={{opacity:0}}
-    // Fade out on leaving page
-    exit={{opacity:0}}
-    // animation duration(s)
-    transition={{duration: 0.5}}
-  >
-      <div>
-        
-        <h2>{recipeData.title}</h2>
-        <h4>Ready in {recipeData.readyInMinutes} minutes</h4>
-        <img src={recipeData.image} alt={recipeData.title} />
-      </div>
+    <div>
+      {recipeData.image &&
+        <motion.div
+        className='children'
+        variants={variants}
+        initial='hidden'
+        animate='show'
+      >
+          <ThemeProvider theme={theme} >
+          <motion.div variants={item}>
+            <Container disableGutters maxWidth="sm" sx={{ pb: '1rem' }}>
+            <Card sx={{ maxWidth:'xs', backgroundColor:'rgba(95, 194, 95, 0.2)' }}>
+                <ImageStyled src={recipeData.image} alt={recipeData.title} />
+                <Typography variant="h6" align="center" fontWeight='900'>
+                  {recipeData.title}
+                </Typography>
+               
+              <CardMedia sx={{justifyContent:'center',display:'flex', pb:'0.7rem', pt:'0.2rem'}}>
+                  <Button color='primary' size='small' variant='contained'>
+                    Add to my list
+                  </Button>
+                  </CardMedia>
+              </Card>
+            </Container>
+            <Container maxWidth="sm" align='center'>
+                <Typography variant='h2' display='inline-block' justifyContent='center' mr='1rem' pb='1rem' fontSize="0.8rem">
+                  👍 {recipeData.aggregateLikes} people like this
+                </Typography>
+                <Typography variant='h2' display='inline-block' justifyContent='center' mr='1rem' pb='1rem' fontSize="0.8rem">
+                   ⏰ Ready in {recipeData.readyInMinutes} minutes <br/>
+                </Typography>
+                <Typography variant='h2' display='inline' justifyContent='center' pb='1rem' fontSize="0.8rem">
+                  💰 ${((recipeData.pricePerServing * recipeData.servings) / 100).toFixed(2)} per serve
+                </Typography>
+              </Container>
+          </motion.div>
 
-      <Info>
-        <Button className={activeTab === 'information' ? 'active' : ''}  onClick={() => setActiveTab('information')}>
-          Information
-        </Button>
-        <Button className={activeTab === 'instructions' ? 'active' : ''} onClick={() => setActiveTab('instructions')}>
-          Instructions
-        </Button>
-        <Button className={activeTab === 'ingredients' ? 'active' : ''}  onClick={() => setActiveTab('ingredients')}>
-          Ingredients
-        </Button>
-
-
-
-        {activeTab === 'information' &&
-        <div>
-          
-          <h3>
-            Each serving will cost on average 
-            ${(recipeData.pricePerServing / 100).toFixed(2)} {/*convert price data to usable value*/}
-          </h3>
-        </div>
-        }
-
-{/* ----------------!!!!!!!!!!!!!----------!!!!!!!!!!!!------------!!!!!!!!!!!!! */}
-                                      {/* TODO */}
-  {/* INSTRUCTION FETCH DATA BREAKS EASILY, ISSUE WITH THE [0] WHILE MAPPING! */}
-{/* ----------------!!!!!!!!!!!!!----------!!!!!!!!!!!!------------!!!!!!!!!!!!! */}
-        {/* {activeTab === 'instructions' &&
-        <div>
-            {recipeData.analyzedInstructions[0].steps.map((step) => {
-              return(
-              <div>
-                <h4>Step {step.number}:</h4>
-                <li>{step.step}</li>
-              </div>
-              )
-            })}
-        </div>
-        } */}
-
-{/* ----------------!!!!!!!!!!!!!----------!!!!!!!!!!!!------------!!!!!!!!!!!!! */}
-        {activeTab === 'ingredients' &&
-        <div>
-          <h3>{recipeData.servings} servings</h3>
-          <ul>
-            {recipeData.extendedIngredients.map((ingredient) => {
-              return(
-              <li key={ingredient.id}>{ingredient.original}</li>
-              )
+  
+          <Container disableGutters maxWidth="sm" sx={{ pb: '1rem' }}>
+          <motion.div variants={item}>
+            <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography variant="h6" fontSize='1rem'>Ingredients</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+              <Typography variant='h4' fontSize="0.8rem">
+                Makes {recipeData.servings} serves
+              </Typography>
+              <ul>
+              {recipeData.extendedIngredients.map((obj) => {
+                return(
+                  <li key={obj.id}>
+                   <Typography display='inline' variant='h2' fontSize="0.8rem">
+                      {obj.original}
+                    </Typography>
+                  </li>  
+                )
               })}
-          </ul>
-        </div>
-        }
+              </ul>
+              </AccordionDetails>
+            </Accordion>
+          </motion.div>
 
-
-      </Info>
-    </Wrapper>
+          <motion.div variants={item}>
+            <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                <Typography variant="h6" fontSize='1rem'>Instructions</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+              <ul>
+              {recipeData.analyzedInstructions.map((obj) => 
+                obj.steps.map((obj2, index) => {
+                  return (
+                    <li key={obj2.step}>
+                      <Typography display='inline' variant='h5' fontSize="0.9rem">Step {index}: </Typography>
+                      <Typography display='inline' variant='h2' fontSize="0.8rem">{obj2.step}</Typography>
+                    </li>   
+                  )})       
+                )}
+              </ul>
+              </AccordionDetails>
+            </Accordion>
+          </motion.div>
+          
+          <motion.div variants={item}>
+            <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
+              <AccordionSummary sx={{ margin:'0 auto'}}
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                 <Typography variant="h6" fontSize='1rem'>Information</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant='h2' fontSize="0.8rem">
+                <div dangerouslySetInnerHTML={{__html: recipeData.summary}}></div>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </motion.div>
+          </Container>
+          </ThemeProvider>
+        </motion.div>
+      }
+    </div>
   )
 }
 
-const Wrapper = styled(motion.div)`
-  margin-top: 10rem;
-  margin-bottom: 5rem;
+const ImageStyled = styled.img`
+  width: 300px;
   display: flex;
-  .active{
-    background: linear-gradient(35deg, #494949, #313131);
-    color: white;
-  }
-  h2{
-    margin-bottom: 2rem;
-  };
-  li {
-    font-size: 1.2rem;
-    line-height: 1rem;
-  };
-  ul {
-    margin-top: 2rem;
-  };
-`
-const Button = styled.button`
-  padding: 1rem 2rem;
-  color: #313131;
-  background: white;
-  border: 2px solid black;
-  margin-right: 2rem;
-  font-weight: 600;
+  margin: 0 auto;
+  border-radius: 5px;
+  padding: 1rem; 
 `;
 
-const Info = styled.div`
-  margin-left: 10rem;
-`
 
 export default Recipe

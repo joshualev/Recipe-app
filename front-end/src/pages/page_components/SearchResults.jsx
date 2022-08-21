@@ -28,12 +28,12 @@ const SearchResults = () => {
       <h2>Search results for {params.search}</h2>
       <Grid
       // Fade in on page enter
-      animate={{opacity:1}}
-      initial={{opacity:0}}
+      animate={{x:0, opacity:1}}
+      initial={{x:-500, opacity:0}}
       // Fade out on leaving page
       exit={{opacity:0}}
       // animation duration(s)
-      transition={{duration: 0.5}}
+      transition={{duration: 1}}
     >
         {searchResult.map((recipe) => {
           return(
