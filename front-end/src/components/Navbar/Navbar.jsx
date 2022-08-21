@@ -80,12 +80,16 @@ export default function Navbar() {
                 Discover
               </Button>
             </NavLink>  
-            <Button color="neutral" aria-label="button" sx={{ mr: 2 }}>
-              My Recipes
-            </Button>
-            <Button color="neutral" aria-label="button" sx={{ mr: 2 }}>
-              Groceries
-            </Button>
+            <NavLink style={{textDecoration: 'none'}}  to='/user/recipes'>
+              <Button color="neutral" aria-label="button" sx={{ mr: 2 }}>
+                Saved Recipes
+              </Button>
+            </NavLink>
+            <NavLink style={{textDecoration: 'none'}}  to='/user/mealplan'>
+              <Button color="neutral" aria-label="button" sx={{ mr: 2 }}>
+                  Meal Plan
+              </Button>
+            </NavLink>
             <Button color="neutral" aria-label="button" sx={{ mr: 2 }}>
               Account
             </Button>
@@ -258,17 +262,21 @@ export default function Navbar() {
 
           <BottomNavigationAction 
           sx={{color: '#F4FBF4'}} 
-          label="My Recipes" 
+          label="Saved Recipes" 
           icon={
-            <FavoriteIcon sx={{color: '#F4FBF4'}}/>
+            <NavLink to='/user/recipes'>
+              <FavoriteIcon sx={{color: '#F4FBF4'}}/>
+            </NavLink>
             }
           />
 
           <BottomNavigationAction 
           sx={{color: '#F4FBF4'}} 
-          label="Groceries" 
+          label="Meal Plan" 
           icon={
-            <LocalGroceryStoreIcon sx={{color: '#F4FBF4'}} />
+            <NavLink to='/user/mealplan'>
+              <LocalGroceryStoreIcon sx={{color: '#F4FBF4'}} />
+            </NavLink>
             }
           />
           <BottomNavigationAction 

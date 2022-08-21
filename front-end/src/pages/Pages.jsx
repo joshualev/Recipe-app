@@ -6,6 +6,8 @@ import Cuisine from './page_components/Cuisine';
 import SearchResults from './page_components/SearchResults';
 import AdvancedSearchResults from './page_components/AdvancedSearchResults';
 import Recipe from './page_components/Recipe';
+import UserRecipes from './page_components/UserRecipes';
+import UserMealPlan from './page_components/UserMealPlan';
 
 
 const Pages = () => {
@@ -21,6 +23,8 @@ const Pages = () => {
       <Route path='/searched/:search' element={<SearchResults/>}/>
       <Route path='/searched/filtered/:search' element={<AdvancedSearchResults/>}/>
       <Route path='/recipe/:name' element={<Recipe/>}/>
+      <Route path='/user/recipes' element={<UserRecipes/>}/>
+      <Route path='/user/recipes' element={<UserMealPlan/>}/>
     </Routes>
   </AnimatePresence>
   )
