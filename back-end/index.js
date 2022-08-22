@@ -1,17 +1,38 @@
+require('dotenv').config()
+
+const cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose')
+const session = require('express-session')
+const mongoDBSession = require('connect-mongodb-session')
 
 const recipesController = require('./controllers/Recipes');
 
 const app = express()
 
-const dbURL = 'mongodb://localhost:27017/fresh-app'
-const PORT = 4000
+const PORT = process.env.PORT
+const dbURL = process.env.MONGODB_URL
+const MongoDBStore = mongoDBSession(session)
+const sessionStore = new MongoDBStore({
+  uri: dbURL,
+  collection: 'sessions'
+})
+
+app.use(cors());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: sessionStore,
+  cookie: {
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  }
+}))
 
 
-
-app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
 
 app.use('/', recipesController)
 

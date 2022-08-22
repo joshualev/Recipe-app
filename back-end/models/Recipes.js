@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
 const recipeSchema = mongoose.Schema({
+    id: Number,
     title: { type: String, required: true },
     imageURL: { type: String, required: true, default: 'https://placedog.net/500'},
     ingredients: Array,
-    instructions: String,
+    instructions: Array,
     decscription: String,
-    cuisine: String,
+    cuisine: Array,
     cost: Number,
     calories: Number,
     protein: Number,
