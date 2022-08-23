@@ -43,7 +43,7 @@ const SecondaryTheme = createTheme({
 });
 
 
-export default function Navbar() {
+export default function Navbar({recipeToSearchParameters, searchFilter, setSearchFilter}) {
   const [input, setInput] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 

@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Container, Card, CardMedia, Button } from '@mui/material';
 
-const Recipe = ({recipes, setRecipes, handleFormSubmit}) => {
+const Recipe = ({handleFormSubmit}) => {
   const params = useParams();
   const [recipeData, setRecipeData] = useState({});
 
@@ -21,8 +21,6 @@ const Recipe = ({recipes, setRecipes, handleFormSubmit}) => {
     handleFormSubmit({...recipeData})
     // console.log(fields)
   }
-
-
 
   const fetchRecipe = async () => {
     const response = await fetch (`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`)
@@ -34,8 +32,6 @@ const Recipe = ({recipes, setRecipes, handleFormSubmit}) => {
   useEffect(() => {
     fetchRecipe()
   },[params.name]);
-
-
 
   const theme = createTheme({
     palette: {

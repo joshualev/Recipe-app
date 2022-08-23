@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {SelectForm, Title, Label, CheckBoxWrapperWrapper, CheckBoxWrapper, NumberInput, Container} from './AdvancedSearchStyles'
 import { Paper, InputBase} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom';
 
 const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
-  // Track state of form text inputs
-  // const [searchTerm, setSearchTerm] = useState("")
+  const navigate = useNavigate() 
   // Track state of advanced filter form inputs
   const [input, setInput] = useState([]);
   // Track state of form checkbox elements
   const [isChecked, setIsChecked] = useState(false);
-
-  const navigate = useNavigate();
   
   const onCheckBoxChange = (e) => {
       setIsChecked(!isChecked)
@@ -23,21 +20,32 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
       })
   }
   const onInputChange = (e) => {
-    // console.log(e.target.name + e.target.value)
     // setIsChecked(!isChecked)
     setInput({
       ...input,
-            // if value = checked, then set target to checked, else set to input value
-            [e.target.name]: e.target.value
-            
+            [e.target.name]: e.target.value          
     })
   }
 
   const submitHandler = (e) => {
+    let searchQuery = ''
     e.preventDefault()
-    // console.log(input.map((input) => input))
-    // navigate('/searched/filter/' + '&query=' + searchTerm)
-    console.log(searchFilter)
+    console.log(input)
+    const keys = Object.keys(input)
+    const values = Object.values(input)
+    console.log(keys, values)
+    for (let i = 0; i < keys.length; i++){
+       if( i === 0 ){
+        searchQuery += values[i] + '&'
+      }
+      else if (i === keys.length - 1) {
+        searchQuery += keys[i] + values[i]
+      }
+      else {
+      searchQuery += keys[i] + values[i] + '&'
+     }     
+    }
+    navigate('/searched/' + searchQuery)
   };
 
   return (
@@ -56,9 +64,10 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
         >
           <InputBase
             sx={{ ml: 1, flex: 1 }}
+            required
             placeholder="Find recipes"
             inputProps={{ 'aria-label': 'Search' }}
-            name='searchInput'
+            name='search'
             input onChange={onInputChange}
           />
             <IconButton type="submit" sx={{ p: '2px' }} aria-label="search">
@@ -158,7 +167,7 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
           <br/>
 {/* CALORIES AND MACRONUTRIENTS START */}
           <Label htmlFor='calories'>Calories</Label>
-          <NumberInput onChange={onInputChange} className='maxCalories=' name='calories' id='calories' type='number' placeholder='Calories'/>
+          <NumberInput onChange={onInputChange} name='maxCalories=' id='calories' type='number' placeholder='Calories'/>
           
           <Label htmlFor='protein'>Protein</Label>
           <NumberInput onChange={onInputChange} name='minProtein=' id='protein' type='number' placeholder='Protein'/>

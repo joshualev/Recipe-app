@@ -1,5 +1,6 @@
-import {React, useEffect, useState} from 'react';
+import {React} from 'react';
 import {useParams} from 'react-router-dom';
+
 import {motion} from 'framer-motion';
 import styled from 'styled-components';
 import { ThemeProvider, createTheme} from '@mui/material/styles';
@@ -11,9 +12,10 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Container, Card, CardMedia, Button } from '@mui/material';
 
-const UserRecipe = (props) => {
+const UserRecipe = ({recipes, handleDeleteRecipe}) => {
+
 const { recipeID } = useParams();
-const recipe = props.recipes.find((recipe) => recipe._id === recipeID)
+const recipe = recipes.find((recipe) => recipe._id === recipeID)
 console.log(recipe)
 
   const theme = createTheme({
@@ -74,7 +76,11 @@ console.log(recipe)
                   <Button sx={{marginRight: '1rem', width:'150px'}} color='primary' size='small' variant='contained'>
                     Add to meal plan
                   </Button>
-                  <Button sx={{width:'150px'}} color='warning' size='small' variant='contained'>
+                  <Button 
+                    sx={{width:'150px'}} 
+                    color='warning' size='small' variant='contained'
+                    onClick={()=> {handleDeleteRecipe(recipe)}}
+                  >
                     Remove from list
                   </Button>
                   </CardMedia>
@@ -82,13 +88,13 @@ console.log(recipe)
             </Container>
             <Container maxWidth="sm" align='center'>
                 <Typography variant='h2' display='inline-block' justifyContent='center' mr='1rem' pb='1rem' fontSize="0.8rem">
-                  👍 10000 people like this
+                  👍 {recipe.likes} people like this
                 </Typography>
                 <Typography variant='h2' display='inline-block' justifyContent='center' mr='1rem' pb='1rem' fontSize="0.8rem">
-                   ⏰ Ready in 10000 minutes <br/>
+                   ⏰ Ready in {recipe.readyInMinutes} minutes <br/>
                 </Typography>
                 <Typography variant='h2' display='inline' justifyContent='center' pb='1rem' fontSize="0.8rem">
-                  💰 $100000 per serve
+                  💰 ${(recipe.cost / 100).toFixed(2)} per serve
                 </Typography>
               </Container>
           </motion.div>
@@ -111,7 +117,7 @@ console.log(recipe)
               <ul>
               {recipe.ingredients.map((obj) => {
                 return(
-                  <li key={obj.id}>
+                  <li key={obj.original}>
                    <Typography display='inline' variant='h2' fontSize="0.8rem">
                       {obj.original}
                     </Typography>
@@ -136,7 +142,7 @@ console.log(recipe)
               <ul>
                 {recipe.instructions.map((obj) => {
                   return(
-                    <ListStyled>
+                    <ListStyled key={obj.step}>
                       <Typography display='inline' variant='h5' fontSize="0.9rem">
                         Step {obj.number}:
                       </Typography>
@@ -162,7 +168,7 @@ console.log(recipe)
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant='h2' fontSize="0.8rem">
-                <div>{recipe.description}</div>
+                <div dangerouslySetInnerHTML={{__html: recipe.description}}></div>
                 </Typography>
               </AccordionDetails>
             </Accordion>

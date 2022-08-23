@@ -32,6 +32,7 @@ function App() {
 
 
 const handleFormSubmit = async (newRecipe) => { 
+  console.log(newRecipe)
   const response = await fetch('http://localhost:4000/user/recipes', {
     method: 'POST',
     headers : {
@@ -45,6 +46,9 @@ const handleFormSubmit = async (newRecipe) => {
       instructions: newRecipe.analyzedInstructions[0].steps,
       description: newRecipe.summary,
       cuisine: newRecipe.cuisines,
+      cost: newRecipe.pricePerServing,
+      likes: newRecipe.aggregateLikes,
+      cookTime: newRecipe.readyInMinutes,
     })
   })
   if (response.ok) {
@@ -58,30 +62,32 @@ const handleFormSubmit = async (newRecipe) => {
   }
 }
 
-const handleDeleteRecipe = async (recipeToDelete) => {
-    const response = await fetch(`http://localhost:4000/user/${recipeToDelete._id}`, {
+const handleDeleteRecipe = async (recipeToDelete) => { 
+    await fetch(`http://localhost:4000/user/${recipeToDelete._id}`, {
     method: 'DELETE',
     headers : {
       'Content-Type': 'application/json'
-    }
-  })
-      console.log(response)
-      console.log(recipeToDelete)
+    },
+  })  
+      console.log('testing for execution 1 2 3 4')
       setRecipes(recipes.filter((recipe) => recipe._id !== recipeToDelete._id))
-      navigate("/")
+      navigate("/user/recipes")
 }
 
 
   useEffect(() => {
    getRecipes() 
-  },[recipes])
-
+  },[])
 
   return (
       <Container> 
         <Navbar searchFilter={searchFilter} setSearchFilter={setSearchFilter}/>
         {recipes &&
-        <Pages handleDeleteRecipe={handleDeleteRecipe} handleFormSubmit={handleFormSubmit} recipes={recipes} setRecipes={setRecipes} searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+        <Pages 
+          handleDeleteRecipe={handleDeleteRecipe} 
+          handleFormSubmit={handleFormSubmit} 
+          recipes={recipes} 
+       />
         }
       </Container>
   );

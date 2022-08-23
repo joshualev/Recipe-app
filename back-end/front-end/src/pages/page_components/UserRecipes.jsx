@@ -5,8 +5,7 @@ import {motion} from 'framer-motion';
 
 
 const UserRecipes = ({recipes, handleDeleteRecipe}) => {
-
-// Animation used to stagger children on page enter
+// // Animation used to stagger children on page enter
 const variants = {
   hidden: { opacity: 0},
   show: {
@@ -43,35 +42,42 @@ const item = {
     <Grid container spacing={1}>
       {recipes.map((recipe) => (
         <Grid item key={recipe._id} xs={12} sm={6} md={4}>  
-    
+       
           <Card
             sx={{ height: '100%', display: 'flex', flexDirection: 'column', m: '0.5rem',borderRadius:'15px' }}
           >
+          
             <CardContent sx={{m:'auto'}}>
               <Typography variant='h5' fontSize='1rem'>
                 {recipe.title}
               </Typography>
-            </CardContent>
+            </CardContent>    
+            <Link style={{textDecoration: 'none'}} to={`/user/recipes/${recipe._id}`}>
             <CardMedia
               component="img"
               image={recipe.imageURL}
               alt={recipe.title}
-              sx={{borderRadius:'10px', width:'90%', height:'90%', m:'0.8rem auto'}}
+              sx={{borderRadius:'5px', width:'90%', height:'90%', m:'0.8rem auto'}}
             />
+             </Link>
     
-            <CardActions sx={{m:'0 auto', pb:'0.8rem'}}>
-              <Link style={{textDecoration: 'none'}} to={`/user/recipes/${recipe._id}`}>
-                <Button variant='contained' sx={{mr:'1.25rem', padding:'1.25rem',width:'100px', height: '2rem', backgroundColor:'rgba(95, 194, 95, 0.9)', borderRadius:'15px'}} >View</Button>
-              </Link>
+            <CardActions sx={{ margin: '0 auto', mb:'0.5rem'}}>
+              <Button variant='contained' 
+                sx={{ padding:'1.25rem',width:'100%', fontSize:'0.72rem', height: '2rem', backgroundColor:'rgba(95, 194, 95, 0.9)', borderRadius:'5px'}} 
+              >
+                Add to meal plan
+              </Button>
               <Button 
                 variant='contained' 
-                sx={{ padding:'1.25rem', width:'100px', height: '2rem', backgroundColor:'rgba(95, 194, 95, 0.9);', borderRadius:'15px'}} size="small"
+                sx={{ padding:'1.25rem', height: '2rem', fontSize:'0.72rem',backgroundColor:'rgba(95, 194, 95, 0.9);', borderRadius:'5px'}} 
+                size="small"
                 onClick={()=> {handleDeleteRecipe(recipe)}}
               >
                   Delete
               </Button>
             </CardActions>
           </Card>
+   
         </Grid>
       ))}
     </Grid>

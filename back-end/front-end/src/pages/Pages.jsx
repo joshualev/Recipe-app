@@ -11,7 +11,7 @@ import UserMealPlan from './page_components/UserMealPlan';
 import UserRecipe from './page_components/UserRecipe';
 
 
-const Pages = ({handleDeleteRecipe, searchFilter, recipes, setRecipes, handleFormSubmit}) => {
+const Pages = ({handleDeleteRecipe, handleFormSubmit, searchFilter, recipes}) => {
   const location = useLocation();
   // useLocation() is required to make animatePresence works (as we are working with react-router)
   // For this, we need to imbed Routes with a key and a location (see below)
@@ -19,14 +19,52 @@ const Pages = ({handleDeleteRecipe, searchFilter, recipes, setRecipes, handleFor
     // <AnimatePresence> wraps all routes in pages to detect change to initiate animations on route enter/exit
   <AnimatePresence >
     <Routes Location={location} key={location.pathname}>
-      <Route path='/' element={<Home/>}/>
-      <Route path='/cuisine/:type' element={<Cuisine/>}/>
-      <Route path='/searched/:search' element={<SearchResults/>}/>
-      <Route path='/searched/filter/:filterSearch' element={<AdvancedSearchResults searchFilter={searchFilter}/>}/>
-      <Route path='/recipe/:name' element={<Recipe recipes={recipes} setRecipes={setRecipes} handleFormSubmit={handleFormSubmit}/>}/>
-      <Route path='/user/recipes' element={<UserRecipes handleDeleteRecipe={handleDeleteRecipe} recipes={recipes}/>}/>
-      <Route path='/user/recipes/:recipeID' element={<UserRecipe handleDeleteRecipe={handleDeleteRecipe} recipes={recipes}/>}/>
-      <Route path='/user/mealplan' element={<UserMealPlan/>}/>
+      {/* HOME PAGE */}
+      <Route 
+        path='/' 
+        element={<Home/>}
+      />
+      {/* CUISINE CATEGORY TYPE */}
+      <Route 
+        path='/cuisine/:type' 
+        element={<Cuisine/>}
+      />
+      {/* STANDARD SEARCH RESULTS */}
+      <Route 
+        path='/searched/:search' 
+        element={<SearchResults/>}
+      />
+      {/* FILTERED SEARCH RESULTS */}
+      <Route 
+        path='/searched/filter/:filterSearch' 
+        element={<AdvancedSearchResults 
+          searchFilter={searchFilter}/>}
+      />
+      {/* STANDARD RECIPE SHOW PAGE */}
+      <Route 
+        path='/recipe/:name' 
+        element={<Recipe 
+          handleFormSubmit={handleFormSubmit}/>}
+      />
+      {/* USERS RECIPES LIST */}
+      <Route 
+        path='/user/recipes' 
+        element={<UserRecipes 
+          handleDeleteRecipe={handleDeleteRecipe} 
+          recipes={recipes}/>}
+      />
+      {/* SHOW PAGE FOR USERS RECIPES */}
+      <Route 
+        path='/user/recipes/:recipeID' 
+        element={<UserRecipe 
+          handleDeleteRecipe={handleDeleteRecipe} 
+          recipes={recipes}/>}
+      />
+      {/* USERS MEAL PLAN PAGE */}
+      <Route 
+        path='/user/mealplan' 
+        element={<UserMealPlan/>}
+      />
     </Routes>
   </AnimatePresence>
   )
