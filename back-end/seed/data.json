@@ -6,11 +6,7 @@
     "instructions": ["maringate chicken overnight", "cook at 350degress for 15minutes"],
     "decscription": "a delicious chicken dish",
     "cuisine": ["south african"],
-    "cost": 11,
-    "calories": 650,
-    "protein": 32,
-    "carbohydrates": 5,
-    "fat": 23
+    "cost": 11
   },
   {
     "title": "Pizza",
@@ -19,11 +15,7 @@
     "instructions": ["roll rough, let it rise", "kneed and place in oven with cheese at 350degress for 15minutes"],
     "decscription": "a delicious pizza dish",
     "cuisine": ["italian"],
-    "cost": 21,
-    "calories": 1120,
-    "protein": 42,
-    "carbohydrates": 112,
-    "fat": 55
+    "cost": 21
   },
   {
     "title": "Dahl",
@@ -31,11 +23,6 @@
     "ingredients": ["Lentils", "curry spices", "coconut oil", "onions"],
     "instructions": ["Let lentils soak overnight", "cook spices in oil until fragerant, cook onions for 20 minutes or until carmalized", "add lentils and water and cook for 1 hour on a gentle simmer"],
     "decscription": "a delicious lentil dish",
-    "cuisine": ["Indian"],
-    "cost": 9,
-    "calories": 560,
-    "protein": 17,
-    "carbohydrates": 83,
-    "fat": 21
+    "cuisine": ["Indian"]
   }
 ]

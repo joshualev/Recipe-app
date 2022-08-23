@@ -7,6 +7,7 @@ const session = require('express-session')
 const mongoDBSession = require('connect-mongodb-session')
 
 const recipesController = require('./controllers/Recipes');
+const usersController = require('./controllers/Users');
 
 const app = express()
 
@@ -35,6 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 app.use('/', recipesController)
+app.use('/user', usersController)
 
 mongoose.connect(dbURL,() => {
   console.log('connected to MongoDB')
