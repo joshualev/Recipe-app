@@ -1,10 +1,10 @@
+import { Link } from 'react-router-dom';
+import React from 'react';
 import { Container, Grid, Card, CardMedia, CardContent, CardActions, Button, Typography} from '@mui/material'
 import {motion} from 'framer-motion';
-import React from 'react'
-import { Link } from 'react-router-dom';
 
-const UserRecipes = ({recipes}) => {
-console.log(recipes)
+
+const UserRecipes = ({recipes, handleDeleteRecipe}) => {
 
 // Animation used to stagger children on page enter
 const variants = {
@@ -63,7 +63,13 @@ const item = {
               <Link style={{textDecoration: 'none'}} to={`/user/recipes/${recipe._id}`}>
                 <Button variant='contained' sx={{mr:'1.25rem', padding:'1.25rem',width:'100px', height: '2rem', backgroundColor:'rgba(95, 194, 95, 0.9)', borderRadius:'15px'}} >View</Button>
               </Link>
-              <Button variant='contained' sx={{ padding:'1.25rem', width:'100px', height: '2rem', backgroundColor:'rgba(95, 194, 95, 0.9);', borderRadius:'15px'}} size="small">Delete</Button>
+              <Button 
+                variant='contained' 
+                sx={{ padding:'1.25rem', width:'100px', height: '2rem', backgroundColor:'rgba(95, 194, 95, 0.9);', borderRadius:'15px'}} size="small"
+                onClick={()=> {handleDeleteRecipe(recipe)}}
+              >
+                  Delete
+              </Button>
             </CardActions>
           </Card>
         </Grid>

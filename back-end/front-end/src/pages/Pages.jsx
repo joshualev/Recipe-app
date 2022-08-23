@@ -11,7 +11,7 @@ import UserMealPlan from './page_components/UserMealPlan';
 import UserRecipe from './page_components/UserRecipe';
 
 
-const Pages = ({searchFilter, recipes, setRecipes, handleFormSubmit}) => {
+const Pages = ({handleDeleteRecipe, searchFilter, recipes, setRecipes, handleFormSubmit}) => {
   const location = useLocation();
   // useLocation() is required to make animatePresence works (as we are working with react-router)
   // For this, we need to imbed Routes with a key and a location (see below)
@@ -24,8 +24,8 @@ const Pages = ({searchFilter, recipes, setRecipes, handleFormSubmit}) => {
       <Route path='/searched/:search' element={<SearchResults/>}/>
       <Route path='/searched/filter/:filterSearch' element={<AdvancedSearchResults searchFilter={searchFilter}/>}/>
       <Route path='/recipe/:name' element={<Recipe recipes={recipes} setRecipes={setRecipes} handleFormSubmit={handleFormSubmit}/>}/>
-      <Route path='/user/recipes' element={<UserRecipes recipes={recipes}/>}/>
-      <Route path='/user/recipes/:recipeID' element={<UserRecipe recipes={recipes}/>}/>
+      <Route path='/user/recipes' element={<UserRecipes handleDeleteRecipe={handleDeleteRecipe} recipes={recipes}/>}/>
+      <Route path='/user/recipes/:recipeID' element={<UserRecipe handleDeleteRecipe={handleDeleteRecipe} recipes={recipes}/>}/>
       <Route path='/user/mealplan' element={<UserMealPlan/>}/>
     </Routes>
   </AnimatePresence>
