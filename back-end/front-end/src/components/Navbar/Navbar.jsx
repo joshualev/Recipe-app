@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react'
-import {useNavigate, Link, NavLink} from 'react-router-dom'
+import {useNavigate, NavLink} from 'react-router-dom'
 
 import {motion,AnimatePresence} from 'framer-motion'
 import {useLocation} from "react-router-dom";
@@ -43,7 +43,7 @@ const SecondaryTheme = createTheme({
 });
 
 
-export default function Navbar({recipeToSearchParameters, searchFilter, setSearchFilter}) {
+export default function Navbar() {
   const [input, setInput] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
@@ -130,12 +130,11 @@ export default function Navbar({recipeToSearchParameters, searchFilter, setSearc
             </IconButton>
           </Paper>
 
-          <AdvancedFilter>
-                <label htmlFor='advancedFilter'>Filter
+          <AdvancedFilter setIsChecked={setIsChecked} isChecked={isChecked}>
+                <label htmlFor='advancedFilter'>Filter by nutrition
                   <input onChange={onHandleFilter} checked={isChecked} name="advancedFilter" id='advancedFilter' type='checkbox'/>
                 </label>
-          </AdvancedFilter>
-          
+          </AdvancedFilter>    
         </Box>
       :
       <Box sx={{ display: {xs: 'none', sm:'block'}, mt:'3rem'}}>
@@ -198,7 +197,7 @@ export default function Navbar({recipeToSearchParameters, searchFilter, setSearc
           </IconButton>
         </Paper>
         <AdvancedFilter>
-          <label htmlFor='advancedFilter'>Filter
+          <label htmlFor='advancedFilter'>Filter by nutrition
             <input onChange={onHandleFilter} checked={isChecked} name="advancedFilter" id='advancedFilter' type='checkbox'/>
           </label>
       </AdvancedFilter>
@@ -245,9 +244,7 @@ export default function Navbar({recipeToSearchParameters, searchFilter, setSearc
             bgcolor:'#5FC25F',
           }}
           showLabels
-          // value={value}
           onChange={(event, newValue) => {
-            // setValue(newValue);
           }}
         >
         

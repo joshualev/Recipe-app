@@ -91,7 +91,7 @@ console.log(recipe)
                   👍 {recipe.likes} people like this
                 </Typography>
                 <Typography variant='h2' display='inline-block' justifyContent='center' mr='1rem' pb='1rem' fontSize="0.8rem">
-                   ⏰ Ready in {recipe.readyInMinutes} minutes <br/>
+                   ⏰ Ready in {recipe.cookTime} minutes <br/>
                 </Typography>
                 <Typography variant='h2' display='inline' justifyContent='center' pb='1rem' fontSize="0.8rem">
                   💰 ${(recipe.cost / 100).toFixed(2)} per serve
@@ -111,9 +111,9 @@ console.log(recipe)
                 <Typography variant="h6" fontSize='1rem'>Ingredients</Typography>
               </AccordionSummary>
               <AccordionDetails>
-              <Typography variant='h4' fontSize="0.8rem">
-                Makes 10000 serves
-              </Typography>
+              {/* <Typography variant='h4' fontSize="0.8rem">
+                Makes {recipe.servings} serves
+              </Typography> */}
               <ul>
               {recipe.ingredients.map((obj) => {
                 return(

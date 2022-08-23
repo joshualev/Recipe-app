@@ -20,7 +20,7 @@ const Lunch = () => {
       } else {
         // else if no local storage data, fetch api as normal
         const res = await fetch(
-          `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9&tags=lunch`
+          `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=12&tags=lunch`
           );
           const data = await res.json();
   

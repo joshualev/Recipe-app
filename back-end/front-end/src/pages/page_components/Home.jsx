@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Dinner from '../../components/Main/Dinner';
-import Popular from '../../components/Main/Popular';
 import {motion} from 'framer-motion';
 import Lunch from '../../components/Main/Lunch';
 import Breakfast from '../../components/Main/Breakfast';
 import Snack from '../../components/Main/Snack';
+import Categories from '../../components/Main/Categories';
 const Home = () => {
 
   // Animation used to stagger children on page enter
@@ -40,6 +40,9 @@ const Home = () => {
       animate='show'
     >
       {/* <Popular/> */}
+      <motion.div variants={item}>
+        <Categories/>
+      </motion.div>
       <motion.div variants={item}>
         <Breakfast/>
       </motion.div>

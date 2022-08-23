@@ -11,10 +11,7 @@ const recipeSchema = mongoose.Schema({
     cost: Number,
     likes: Number,
     cookTime: Number,
-    calories: Number,
-    protein: Number,
-    carbohydrates: Number,
-    fat: Number,
+    nutrition: Array
 })
 
 const Recipes = mongoose.model("Recipes", recipeSchema)
