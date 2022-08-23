@@ -32,7 +32,7 @@ const Pages = ({handleDeleteRecipe, handleFormSubmit, searchFilter, recipes}) =>
       {/* STANDARD SEARCH RESULTS */}
       <Route 
         path='/searched/:search' 
-        element={<SearchResults/>}
+        element={<SearchResults handleFormSubmit={handleFormSubmit}/>}
       />
       {/* FILTERED SEARCH RESULTS */}
       <Route 

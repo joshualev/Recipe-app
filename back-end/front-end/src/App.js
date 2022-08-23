@@ -49,7 +49,6 @@ const handleFormSubmit = async (newRecipe) => {
       cost: newRecipe.pricePerServing,
       likes: newRecipe.aggregateLikes,
       cookTime: newRecipe.readyInMinutes,
-      nutrition: newRecipe.nutrition
     })
   })
   if (response.ok) {

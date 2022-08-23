@@ -7,7 +7,7 @@ import IconButton from '@mui/joy/IconButton';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CardActions from '@mui/material/CardActions';
-const SearchResults = () => {
+const SearchResults = ({handleFormSubmit}) => {
   const params = useParams();
   const [searchResult, setSearchResult] = useState([]);
 
@@ -25,7 +25,6 @@ const SearchResults = () => {
     console.log(searchResult)
   }, [params.search])
   
-
 // Animation used to stagger children on page enter
 const variants = {
   hidden: { opacity: 0},
@@ -100,10 +99,7 @@ const item = {
               {Math.ceil(recipe.nutrition.nutrients[0].amount)} calories 
               <Typography sx={{m:'auto', display:'flex', justifyContent:'center', fontSize:'0.8rem'}}>{recipe.nutrition.weightPerServing.amount}{recipe.nutrition.weightPerServing.unit} serving</Typography>
             </Typography>
-            {/* <CardActions disableSpacing> */}
-              <IconButton aria-label="add to recipe list">
-                <FavoriteIcon />
-              </IconButton>
+
             <MacrosContainer>
               {recipe.nutrition.nutrients.map((macro) => {
                 if (macro.name === 'Protein') {
@@ -128,7 +124,6 @@ const item = {
               })}
               
             </MacrosContainer>
-            {/* </CardActions> */}
           </Card>
           </Link>
         </Grid>
@@ -143,8 +138,7 @@ const item = {
 }
 
 const MacrosContainer = styled.div`
-  display: inline;
-  justify-content: center;
+  display: flex;
   margin: 0 auto;
   background: rgba(95, 194, 95, 0.7);
   border-top-right-radius: 5px;
