@@ -59,6 +59,32 @@ The normal RESTful routes were adhered to in order to process database collectio
 
 ---
 
+### Screenshots
+
+Sample screenshots of the app:
+
+Sign In Page
+<img width="1503" alt="signin" src="https://user-images.githubusercontent.com/104814228/186783170-bf38fd81-2db7-4eef-a10c-f8576389b5a7.png">
+
+
+Home Page 
+(index <img width="1512" alt="indexpage" src="https://user-images.githubusercontent.com/104814228/186782904-075fe1d2-8c12-4843-b727-9e407d57892c.png">
+view)
+
+Users Recipes Page
+<img width="1502" alt="recipes" src="https://user-images.githubusercontent.com/104814228/186783285-1e5b5071-052c-4eb2-8028-27bb54c9e331.png">
+
+
+Meal Plan
+<img width="1502" alt="mealplan" src="https://user-images.githubusercontent.com/104814228/186783249-1580263b-bd36-4acc-ab4e-733a6ee39504.png">
+
+
+
+Search Recipes
+<img width="1509" alt="search" src="https://user-images.githubusercontent.com/104814228/186783227-3dc41d02-b3ff-428b-a03e-e4ccfecb782e.png">
+
+---
+
 ### Future Update Options
 Options include fulfilling the criteria established in the stretch goals during the planning phase.
 
