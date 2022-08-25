@@ -8,73 +8,56 @@ import { Link } from 'react-router-dom';
 
   const UserMealPlan = ({authorised, mealPlan, handleCreateMealPlanSubmit, handleUpdateMealPlan}) => {
     const [generatedPlan, setGeneratedPlan] = useState({});
-    const [generatedPlanFilter, setGeneratedPlanFilter] = useState({})
-
+    const [input, setInput] = useState(2000);
+    
     const getMeals = async () => {
       const response = await fetch(
-        `https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.REACT_APP_API_KEY}`
+        `https://api.spoonacular.com/mealplanner/generate?targetCalories=2500&apiKey=${process.env.REACT_APP_API_KEY}`
       );
       const data = await response.json()
       setGeneratedPlan(data)
-      // const filter = Object.values(data.week).map((meals) => meals)
-      // setGeneratedPlanFilter(filter)    
-      // console.log('meal plan', mealPlan[0].week.monday)
+      console.log('data', data)
+
     }
 
 
-
     useEffect(() => {
-      // checkIfTrue()
       getMeals()
     }, [])
 
 
   const handleSubmit = (e) => {
-    e.preventDefault()   
+    e.preventDefault()      
+
     handleUpdateMealPlan('630764b37e711f167204ff9c', generatedPlan)
+    console.log('INPUT', input)
+    // setInput('')
+  }
+
+
+  const handleChange = (e) => {
+    setInput([e.target.name] = e.target.value)
   }
 
   
-  const variants = {
-    hidden: { opacity: 0},
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-  
-  const item = {
-    hidden: {
-      opacity: 0,
-      x: -100,
-    },
-    show: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.8,
-      },
-    },
-  };
 
   return (
     
     <>
-{authorised &&
+{/* {authorised && */}
  <div>
       <form onSubmit={handleSubmit}>
+        {/* <input type='number' name='input' onChange={handleChange} placeholder='Target calories'></input> */}
         <SubmitButton type="submit" value="Generate Meal Plan"/>
       </form>
     
     {mealPlan &&
-      <motion.div
-    className='children'
-    variants={variants}
-    initial='hidden'
-    animate='show'
-  >
+     <motion.div
+     initial={{ y: 100, opacity: 0 }}
+       animate={{ y: 0, opacity: 1 }}
+       exit={{ opacity: 0 }}
+       transition={{duration: 0.5}}
+   >
   
     <MealPlanContainer>
     <Box sx={{ flexGrow: 1 }}>
@@ -587,10 +570,10 @@ import { Link } from 'react-router-dom';
   </motion.div>
   }
   </div>
-  }
-
-{!authorised &&
-  <Container2>
+  {/* } */}
+{/* 
+{!authorised && */}
+  {/* <Container2>
   <StyledDiv1>You need an account to save recipes</StyledDiv1>
     <Link to='/login' style={{textDecoration:'none'}}>
       <StyledDiv2>Log in</StyledDiv2>
@@ -598,14 +581,24 @@ import { Link } from 'react-router-dom';
     <Link to='/register' style={{textDecoration:'none'}}>
       <StyledDiv2>Register</StyledDiv2>
     </Link>
-</Container2>   
-  }
+</Container2>    */}
+  {/* } */}
     </>
     
   )
 }
 const MealPlanContainer = styled.div`
 margin-top: 2rem;
+
+a {
+  color: #265EBA;
+  text-decoration: none;
+  transition: 300ms;
+  &:hover {
+    transform: scaleX(1.03) scaleY(1.03);
+    color: #132F5D;
+  }
+}
 `;
 
 const SubmitButton = styled.input`
@@ -664,12 +657,16 @@ const MealHeader = styled.div`
   border-top-left-radius: 5px;
   width: 90%;
   margin: 0 auto;
+  padding: 0.4rem;
 `;
 
 const MealContent = styled.div`
 height: 50px;
 h5 {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  width: 80%;
+  margin: 0.5rem auto;
+  padding-bottom: 0.4rem;
 }
   .calories {
     border-radius: 50%;

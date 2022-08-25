@@ -11,7 +11,8 @@ import {AdvancedFilter} from './AdvancedSearchStyles'
 
 import styled from 'styled-components'
 import { ThemeProvider, createTheme} from '@mui/material/styles';
-
+import CookieIcon from '@mui/icons-material/Cookie';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Stack, Toolbar, AppBar, Box, Paper,Button, BottomNavigation, BottomNavigationAction, InputBase} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
@@ -297,30 +298,33 @@ export default function Navbar({authorised,handleLogout}) {
           label="Meal Plan" 
           icon={
             <NavLink to='/user/mealplan'>
-              <LocalGroceryStoreIcon sx={{color: '#F4FBF4'}} />
+              <CookieIcon sx={{color: '#F4FBF4'}} />
             </NavLink>
             }
           />
 
           {authorised
           ?
+          <form onSubmit={handleClickLogout}>
             <BottomNavigationAction  
+              type='submit'
               sx={{color: '#F4FBF4'}} 
               label="Log out" 
               icon={
-                <AccountCircleIcon 
+                <ExitToAppIcon 
                   sx={{color: '#F4FBF4'}} />
               } 
             />
+            </form>
           :
             <BottomNavigationAction  
               sx={{color: '#F4FBF4'}} 
               label="Log in" 
               icon={
-                  // <NavLink to='/login'>
+                  <NavLink to='/login'>
                   <AccountCircleIcon 
                     sx={{color: '#F4FBF4'}} />
-                  // </NavLink>
+                  </NavLink>
                 } 
               />
           }

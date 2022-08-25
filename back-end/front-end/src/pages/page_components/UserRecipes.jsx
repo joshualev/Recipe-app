@@ -78,9 +78,9 @@ const replaceStr = (str) => {
               sx={{borderRadius:'5px', width:'90%', height:'90%', m:'0.8rem auto'}}
             />
              <Typography level="body2" sx={{m:'auto', mt: 0.5, mb: 2 }}>
-              {recipe.calories}
+              {recipe.calories}ilocalories
             </Typography>
-            <AddToMenu >Add to meal plan</AddToMenu>
+            {/* <AddToMenu >Add to meal plan</AddToMenu> */}
             <RemoveFromList onClick={()=> {handleDeleteRecipe(recipe)}}>Remove</RemoveFromList>
             <MacrosContainer>
                 <div>{recipe.protein} pro</div>
