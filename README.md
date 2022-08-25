@@ -45,6 +45,22 @@ After I had a good idea of the apps purpose, I planned what would be required fo
 <img width="350" alt="Search" src="https://user-images.githubusercontent.com/104814228/186780602-968dff39-1e19-4b72-a5e4-209423909125.png">
 <img width="428" alt="SearchResults" src="https://user-images.githubusercontent.com/104814228/186780607-218bd0ac-bb90-42d8-8d1f-5580b6b03ce1.png">
 
+---
 
+### Implementation
+
+The app's UI was built using a combination of [styled components](https://styled-components.com/) and [MUI components](https://mui.com/components/).
+Technologies used were React for the front end and Express & MongoDB for the back end.
+
+A `recipes` controller and model handles the database manipulation in MongoDB for recipes a user has saved to a list
+A `mealplan` controller and model handles the database manipulation in MongoDB for meal plans
+A `users` controller handles the database of users, as well as signing in and out of sessions. 
+The normal RESTful routes were adhered to in order to process database collections.
 
 ---
+
+### Future Update Options
+Options include fulfilling the criteria established in the stretch goals during the planning phase.
+
+---
+
