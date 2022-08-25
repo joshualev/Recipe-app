@@ -111,9 +111,6 @@ console.log(recipe)
                 <Typography variant="h6" fontSize='1rem'>Ingredients</Typography>
               </AccordionSummary>
               <AccordionDetails>
-              {/* <Typography variant='h4' fontSize="0.8rem">
-                Makes {recipe.servings} serves
-              </Typography> */}
               <ul>
               {recipe.ingredients.map((obj) => {
                 return(

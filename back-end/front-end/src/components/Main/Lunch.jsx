@@ -29,9 +29,12 @@ const Lunch = () => {
           console.log(data);
       };
     };
+
+
   
     useEffect(() => {
       getlunch()
+      console.log(lunch)
     },[]);
   
     return (
@@ -74,7 +77,7 @@ const Lunch = () => {
             {lunch.map((recipe) => {
               return(
                 <SplideSlide key={recipe.id}>
-            
+                  
                   <Card>
                     <Link to={'/recipe/' + recipe.id}>
                       <p>{recipe.title}</p>
@@ -87,6 +90,7 @@ const Lunch = () => {
                     </Link>
                   </Card>
                 </SplideSlide>
+
               );
             })}
             </Splide>

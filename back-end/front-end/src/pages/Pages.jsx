@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import {AnimatePresence} from 'framer-motion';
 import React from 'react';
+
 import Home from './page_components/Home';
 import Cuisine from './page_components/Cuisine';
 import SearchResults from './page_components/SearchResults';
@@ -9,9 +10,10 @@ import Recipe from './page_components/Recipe';
 import UserRecipes from './page_components/UserRecipes';
 import UserMealPlan from './page_components/UserMealPlan';
 import UserRecipe from './page_components/UserRecipe';
+import Login from '../components/User/Login';
+import Register from '../components/User/Register';
 
-
-const Pages = ({handleDeleteRecipe, handleFormSubmit, searchFilter, recipes}) => {
+const Pages = ({handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, handleDeleteRecipe, handleFormSubmit, searchFilter, recipes, handleAuthorise, authorised}) => {
   const location = useLocation();
   // useLocation() is required to make animatePresence works (as we are working with react-router)
   // For this, we need to imbed Routes with a key and a location (see below)
@@ -32,7 +34,8 @@ const Pages = ({handleDeleteRecipe, handleFormSubmit, searchFilter, recipes}) =>
       {/* STANDARD SEARCH RESULTS */}
       <Route 
         path='/searched/:search' 
-        element={<SearchResults handleFormSubmit={handleFormSubmit}/>}
+        element={<SearchResults 
+          handleFormSubmit={handleFormSubmit}/>}
       />
       {/* FILTERED SEARCH RESULTS */}
       <Route 
@@ -51,7 +54,8 @@ const Pages = ({handleDeleteRecipe, handleFormSubmit, searchFilter, recipes}) =>
         path='/user/recipes' 
         element={<UserRecipes 
           handleDeleteRecipe={handleDeleteRecipe} 
-          recipes={recipes}/>}
+          recipes={recipes}
+          authorised={authorised}/>}
       />
       {/* SHOW PAGE FOR USERS RECIPES */}
       <Route 
@@ -63,7 +67,26 @@ const Pages = ({handleDeleteRecipe, handleFormSubmit, searchFilter, recipes}) =>
       {/* USERS MEAL PLAN PAGE */}
       <Route 
         path='/user/mealplan' 
-        element={<UserMealPlan/>}
+        element={<UserMealPlan
+          handleCreateMealPlanSubmit={handleCreateMealPlanSubmit}
+          mealPlan={mealPlan}
+          authorised={authorised}
+          handleUpdateMealPlan={handleUpdateMealPlan}
+        />}
+      />
+      {/* USER LOGIN */}
+      <Route 
+        path='/login' 
+        element={<Login 
+          handleAuthorise={handleAuthorise} 
+          authorised={authorised}/>}
+      />
+      {/* USER REGISTER */}
+      <Route 
+        path='/register' 
+        element={<Register 
+          handleAuthorise={handleAuthorise} 
+          authorised={authorised}/>}
       />
     </Routes>
   </AnimatePresence>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Title, Label, NumberInput, Container} from './AdvancedSearchStyles'
-import { Paper, InputBase} from '@mui/material';
+import { Box, Paper, InputBase} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
@@ -40,7 +40,7 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
   };
 
   return (
- 
+    <Box sx={{mb:'2rem'}}>
     <Container>
       <Title>Filter By Nutrients</Title>
       <br/>
@@ -84,6 +84,7 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
 {/* CALORIES AND MACRONUTRIENTS END */}
       </form>
     </Container>
+    </Box>
   )
 }
 

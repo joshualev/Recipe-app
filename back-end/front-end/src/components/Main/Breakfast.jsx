@@ -71,7 +71,9 @@ function Breakfast() {
             width: '100%',
           }}>
           {breakfast.map((recipe) => {
+            
             return(
+              
               <SplideSlide key={recipe.id}>
           
                 <Card>

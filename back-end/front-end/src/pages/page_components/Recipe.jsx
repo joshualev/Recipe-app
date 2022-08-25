@@ -14,11 +14,12 @@ import { Container, Card, CardMedia, Button } from '@mui/material';
 const Recipe = ({handleFormSubmit}) => {
   const params = useParams();
   const [recipeData, setRecipeData] = useState({});
+  const [nutritionData, setNutritionData] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     // console.log(fields)
-    handleFormSubmit({...recipeData})
+    handleFormSubmit({...recipeData, ...nutritionData})
     // console.log(fields)
   }
 
@@ -26,11 +27,20 @@ const Recipe = ({handleFormSubmit}) => {
     const response = await fetch (`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`)
     const data = await response.json()
     setRecipeData(data);
-      console.log('data', data)
+      // console.log('data', data)
+  }
+
+
+  const fetchNutrition = async () => {
+    const response = await fetch (`https://api.spoonacular.com/recipes/${params.name}/nutritionWidget.json?apiKey=${process.env.REACT_APP_API_KEY}`)
+    const nutritionInfo = await response.json()
+    setNutritionData(nutritionInfo);
+      // console.log('data', nutritionInfo)
   }
 
   useEffect(() => {
     fetchRecipe()
+    fetchNutrition()
   },[params.name]);
 
   const theme = createTheme({
@@ -92,9 +102,9 @@ const Recipe = ({handleFormSubmit}) => {
               <CardMedia sx={{justifyContent:'center',display:'flex', pb:'0.7rem', pt:'0.2rem'}}>
      
                 <form onSubmit={handleSubmit }>
-                  <Button type='submit' color='primary' size='small' variant='contained'>
+                  <AddToListButton type='submit' color='primary' size='small' variant='contained'>
                     Add to my list
-                  </Button>
+                  </AddToListButton>
                 </form>
 
               </CardMedia>
@@ -198,6 +208,25 @@ const ImageStyled = styled.img`
   margin: 0 auto;
   border-radius: 5px;
   padding: 1rem; 
+`;
+
+const AddToListButton = styled.button`
+margin-top: 1rem;
+background-color: #82B388;
+border: 1px solid #78AC7E;
+padding: 1.2rem;
+border-radius: 5px;
+font-size: 1rem;
+font-weight: 600;
+color: white;
+text-shadow: 0 0 1px black;
+box-shadow: 0 0 0.01rem black;
+transition: 300ms ease-in-out;
+
+&:hover {
+  transform: scaleX(1.03) scaleY(1.03);
+  background-color: #8DB992;
+}
 `;
 
 

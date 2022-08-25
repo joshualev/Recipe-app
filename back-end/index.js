@@ -1,16 +1,16 @@
 require('dotenv').config()
 
-const cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const mongoDBSession = require('connect-mongodb-session')
+const cors = require('cors')
 
 const recipesController = require('./controllers/Recipes');
-const usersController = require('./controllers/Users');
+const mealPlanController = require('./controllers/MealPlan')
+const userController = require('./controllers/Users');
 
 const app = express()
-
 const PORT = process.env.PORT
 const dbURL = process.env.MONGODB_URL
 const MongoDBStore = mongoDBSession(session)
@@ -19,7 +19,9 @@ const sessionStore = new MongoDBStore({
   collection: 'sessions'
 })
 
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -36,7 +38,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 app.use('/', recipesController)
-app.use('/user', usersController)
+app.use('/meals', mealPlanController)
+app.use('/user', userController)
 
 mongoose.connect(dbURL,() => {
   console.log('connected to MongoDB')

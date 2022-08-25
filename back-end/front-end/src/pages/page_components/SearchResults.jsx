@@ -1,12 +1,9 @@
 import { React, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import {motion} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 import { Container, Grid, Card, CardMedia, CardContent, Typography} from '@mui/material'
-import IconButton from '@mui/joy/IconButton';
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import CardActions from '@mui/material/CardActions';
+
 const SearchResults = ({handleFormSubmit}) => {
   const params = useParams();
   const [searchResult, setSearchResult] = useState([]);
@@ -25,43 +22,17 @@ const SearchResults = ({handleFormSubmit}) => {
     console.log(searchResult)
   }, [params.search])
   
-// Animation used to stagger children on page enter
-const variants = {
-  hidden: { opacity: 0},
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const item = {
-  hidden: {
-    opacity: 0,
-    x: -100,
-  },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.8,
-    },
-  },
-};
-
  
   return (
     <>
+    <AnimatePresence>
     {searchResult &&
     <motion.div
-    className='children'
-    variants={variants}
-    initial='hidden'
-    animate='show'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
   >
     
-    <motion.div variants={item}>
     <Container sx={{ py: 4 }} maxWidth="md" >
     <Grid container spacing={3}>
       {searchResult.map((recipe) => (
@@ -130,9 +101,10 @@ const item = {
       ))}
     </Grid>
   </Container>
-  </motion.div>
 </motion.div>
+
 }
+</AnimatePresence>
 </>
   );
 }

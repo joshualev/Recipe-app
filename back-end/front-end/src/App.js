@@ -5,11 +5,62 @@ import Pages from './pages/Pages.jsx'
 import Navbar from './components/Navbar/Navbar'
 
 function App() {
+  const [authorised, setAuthorised] = useState(null)
   const [recipes, setRecipes] = useState(null)
+  const [mealPlan, setMealPlan] = useState(null)
   const [searchFilter, setSearchFilter] = useState([])
 
   const navigate = useNavigate()
 
+  const handleAuthorise = (authed) => {
+    console.log('authed', authed)
+    console.log('authorised is', authorised)
+    setAuthorised(authed)
+    console.log('authorised is', authorised)
+    if (authed) {
+      console.log('You have successfully logged in')
+      navigate('/')
+    } else {
+      console.log('Incorrect username details')
+    }
+  }
+
+  const handleLogout = () => {
+    setAuthorised(false)
+    navigate('/')
+  }
+
+  const checkLoginStatus = async () => {
+    const res = await fetch('http://localhost:4000/user/isauthorised')
+    const data = await res.json()
+    setAuthorised(data.authorised)
+    console.log(authorised)
+    console.log('DATA', data)
+  }
+
+  // get meal plan data
+  async function getMealPlan() {
+    try {
+      const response = await fetch('http://localhost:4000/meals/', {
+        method: 'GET',
+        headers: {
+          accept: 'application.json'
+        },
+      });
+      if (response.ok) {
+        const result = await response.json();
+        setMealPlan(result);
+        console.log('meal plan', mealPlan);
+      }
+      if (!response.ok) {
+        throw new Error(`Error! status: $(response.status})`);
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  // Get recipe data
   async function getRecipes() {
     try {
       const response = await fetch('http://localhost:4000/', {
@@ -30,7 +81,36 @@ function App() {
   }
 }
 
+useEffect(() => {
+  getRecipes() 
+  getMealPlan() 
+  checkLoginStatus()
+  // on each refresh, checks if used is authorised
+ },[])
 
+// Add new meal item to meal plan list
+const handleCreateMealPlanSubmit = async(newMeal) => {
+
+  console.log('new meal', newMeal)
+  console.log('mealplan, mealplan', mealPlan)
+  const response = await fetch('http://localhost:4000/meals/', {
+    method: 'POST',
+    headers : {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newMeal)
+  })
+  if (response.ok) {
+    const newMealPlanResult = await response.json()
+    console.log('mealPlan Before', mealPlan)
+    setMealPlan(newMealPlanResult)
+    
+    console.log('mealPlan after', mealPlan)
+  }
+}
+
+
+//  Add recipe item to saved list
 const handleFormSubmit = async (newRecipe) => { 
   console.log(newRecipe)
   const response = await fetch('http://localhost:4000/user/recipes', {
@@ -49,6 +129,10 @@ const handleFormSubmit = async (newRecipe) => {
       cost: newRecipe.pricePerServing,
       likes: newRecipe.aggregateLikes,
       cookTime: newRecipe.readyInMinutes,
+      calories: newRecipe.calories,
+      protein: newRecipe.protein,
+      carbohydrates: newRecipe.carbs,
+      fats: newRecipe.fat
     })
   })
   if (response.ok) {
@@ -75,18 +159,38 @@ const handleDeleteRecipe = async (recipeToDelete) => {
 }
 
 
-  useEffect(() => {
-   getRecipes() 
-  },[])
+const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
+  console.log(mealPlanID)
+  await fetch(`http://localhost:4000/meals/${mealPlanID}`, {
+  method: 'PUT', 
+  headers : {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(generatedPlan)
+})
+    console.log('updating now')
+    setMealPlan(mealPlan)
+    navigate("/user/mealplan")
+}
 
   return (
       <Container> 
-        <Navbar searchFilter={searchFilter} setSearchFilter={setSearchFilter}/>
+        <Navbar 
+          searchFilter={searchFilter} 
+          setSearchFilter={setSearchFilter}
+          handleLogout={handleLogout}
+          authorised={authorised} 
+        />
         {recipes &&
         <Pages 
           handleDeleteRecipe={handleDeleteRecipe} 
           handleFormSubmit={handleFormSubmit} 
           recipes={recipes} 
+          handleAuthorise={handleAuthorise} 
+          authorised={authorised}
+          handleCreateMealPlanSubmit={handleCreateMealPlanSubmit}
+          mealPlan={mealPlan}
+          handleUpdateMealPlan={handleUpdateMealPlan}
        />
         }
       </Container>

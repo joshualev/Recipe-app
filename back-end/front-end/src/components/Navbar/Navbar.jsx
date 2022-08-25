@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useState } from 'react'
-import {useNavigate, NavLink} from 'react-router-dom'
+import {useLocation, useNavigate, NavLink} from 'react-router-dom'
 
 import {motion,AnimatePresence} from 'framer-motion'
-import {useLocation} from "react-router-dom";
+
 
 import AdvancedSearch from './AdvancedSearch';
 import {AdvancedFilter} from './AdvancedSearchStyles'
@@ -31,6 +31,8 @@ const theme = createTheme({
   },
 });
 
+
+
 const SecondaryTheme = createTheme({
   palette: {
     primary: {
@@ -42,20 +44,20 @@ const SecondaryTheme = createTheme({
   },
 });
 
-
-export default function Navbar() {
+export default function Navbar({authorised,handleLogout}) {
   const [input, setInput] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-
   // enables exit animations when used motion animations to enable exit animation
   const location=useLocation()
+  const navigate=useNavigate();
 
-
-  const onHandleFilter = (e) => {
-    setIsChecked(!isChecked)
+  const handleClickLogout =  async () => {
+    await fetch ('http://localhost:4000/user/logout', {
+      method: 'POST'
+    })
+    handleLogout()
   }
-
-  const navigate = useNavigate();
+  
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -63,7 +65,11 @@ export default function Navbar() {
     console.log(input)
   };
 
+  const onHandleFilter = (e) => {
+    setIsChecked(!isChecked)
+  }
 
+  
   return( 
     <>
 
@@ -92,9 +98,24 @@ export default function Navbar() {
                   Meal Plan
               </Button>
             </NavLink>
-            <Button color="neutral" aria-label="button" sx={{ mr: 2 }}>
-              Account
-            </Button>
+            {authorised
+            ?
+              <form onSubmit={handleClickLogout}>
+                <Button 
+                  type='submit'
+                  color="neutral" aria-label="button" sx={{ mr: 2 }}>
+                    Log out
+                </Button>
+                </form>
+            
+            :
+              <NavLink style={{textDecoration: 'none'}}  to='/login'>
+                <Button
+                  color="neutral" aria-label="button" sx={{ mr: 2 }}>
+                    Log in
+                </Button>
+              </NavLink>
+            }
           </Toolbar>
         </AppBar>
         <Box sx={{padding:1}}/>
@@ -104,7 +125,8 @@ export default function Navbar() {
       {/* AnimatePresence wraps over motion.div, this enables exit animations by
       delays mounting child components until exit animations are completed*/}
       {/* If checked is true, show advanced filters */}
-      {!isChecked 
+      <>
+      {!isChecked
       ?
         <Box 
           sx={{ 
@@ -165,6 +187,7 @@ export default function Navbar() {
           </motion.div>
       </Box>
       }
+      </>
       </AnimatePresence>
     </ThemeProvider>          
 
@@ -278,13 +301,30 @@ export default function Navbar() {
             </NavLink>
             }
           />
-          <BottomNavigationAction 
-          sx={{color: '#F4FBF4'}} 
-          label="Account" 
-          icon={<AccountCircleIcon 
-            sx={{color: '#F4FBF4'}} />
-            } 
-          />
+
+          {authorised
+          ?
+            <BottomNavigationAction  
+              sx={{color: '#F4FBF4'}} 
+              label="Log out" 
+              icon={
+                <AccountCircleIcon 
+                  sx={{color: '#F4FBF4'}} />
+              } 
+            />
+          :
+            <BottomNavigationAction  
+              sx={{color: '#F4FBF4'}} 
+              label="Log in" 
+              icon={
+                  // <NavLink to='/login'>
+                  <AccountCircleIcon 
+                    sx={{color: '#F4FBF4'}} />
+                  // </NavLink>
+                } 
+              />
+          }
+        
         </BottomNavigation>
       </Box> 
       </Wrapper>
