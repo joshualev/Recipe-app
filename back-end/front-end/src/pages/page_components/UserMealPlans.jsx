@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {Box, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-  const UserMealPlan = ({handleShowMealPlan, authorised, mealPlan, handleCreateMealPlanSubmit, handleUpdateMealPlan}) => {
+  const UserMealPlan = ({handleDeleteMealPlan, handleShowMealPlan, authorised, mealPlan, handleCreateMealPlanSubmit, handleUpdateMealPlan}) => {
     const [generatedPlan, setGeneratedPlan] = useState(null);
     const [input, setInput] = useState(2000);
     
@@ -35,7 +35,6 @@ console.log(mealPlan)
     setInput([e.target.name] = e.target.value)
   }
 
-  
 
   return (  
     <>
@@ -61,9 +60,10 @@ console.log(mealPlan)
             exit={{ opacity: 0 }}
             transition={{duration: 0.5}}
         >
-          <Link to={`/user/mealplan/${meal._id}`}>
+   
             <Grid item key={meal._id}>
                 <ItemDiv>
+                <Link to={`/user/mealplan/${meal._id}`}>
                     <Header>
                       Meal Plan
                     </Header>
@@ -74,9 +74,11 @@ console.log(mealPlan)
                       </div>   
                     </div>
                   </MealNutrition>
+                  </Link>
+                  <RemoveFromList onClick={()=> {handleDeleteMealPlan(meal)}}>Remove</RemoveFromList>
                 </ItemDiv>
               </Grid>
-          </Link>
+   
          </motion.div>
               )
           })}
@@ -308,5 +310,27 @@ const StyledInputText = styled.input`
   &:hover {
     transform: scaleX(1.03) scaleY(1.03)
   }
+`;
+
+const RemoveFromList = styled.div`
+
+margin: 1rem auto;
+text-align: center;
+background-color: #D83818;
+border: 1px solid #6C1C0C;
+padding: 0.5rem;
+width: 80%;
+border-radius: 5px;
+font-size: 1rem;
+font-weight: 600;
+color: white;
+text-shadow: 0 0 1px black;
+transition: 300ms ease-in-out;
+cursor: pointer;
+
+&:hover {
+  transform: scaleX(1.03) scaleY(1.03);
+  background-color: #C83416;
+}
 `;
 export default UserMealPlan

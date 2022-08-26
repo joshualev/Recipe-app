@@ -36,16 +36,17 @@ mealPlanRouter.post('/', async (req,res) => {
   }
 })
 
+
 //Delete Route
-// mealPlanRouter.delete('/', async (req,res) => {
-//   try {
-//     const mealToRemove = await MealPlan.deleteMany({}).exec()
-//     console.log(mealToRemove, 'has been removed')
-//     res.status(200).json(mealToRemove)
-//   } catch (error) {
-//     res.status(500).json({errorMessage: errorMessage})
-//   }
-//   })
+mealPlanRouter.delete('/:mealPlanID', async (req,res) => {
+  try {
+    const mealToRemove = await MealPlan.findByIdAndDelete(req.params.mealPlanID).exec()
+    console.log(mealToRemove, 'has been removed')
+    res.status(200).json(mealToRemove)
+  } catch (error) {
+    res.status(500).json({errorMessage: errorMessage})
+  }
+  })
 
 
   mealPlanRouter.put('/:mealPlanID', async (req,res) => {

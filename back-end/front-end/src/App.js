@@ -159,6 +159,21 @@ const handleShowMealPlan = async (mealPlanID) => {
 }
 
 
+const handleDeleteMealPlan = async (mealPlanToDelete) => { 
+  await fetch(`http://localhost:4000/meals/${mealPlanToDelete._id}`, {
+  method: 'DELETE',
+  headers : {
+    'Content-Type': 'application/json'
+  },
+})  
+    console.log('testing for execution 1 2 3 4')
+    setMealPlan(mealPlan.filter((meal) => meal._id !== mealPlanToDelete._id))
+    getMealPlan()
+    navigate("/user/mealplan")
+}
+
+
+
 const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
   console.log(mealPlanID)
   await fetch(`http://localhost:4000/meals/${mealPlanID}`, {
@@ -192,6 +207,7 @@ const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
           mealPlan={mealPlan}
           handleUpdateMealPlan={handleUpdateMealPlan}
           handleShowMealPlan={handleShowMealPlan}
+          handleDeleteMealPlan={handleDeleteMealPlan}
        />
         }
       </Container>

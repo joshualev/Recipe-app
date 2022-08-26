@@ -13,7 +13,7 @@ import UserRecipe from './page_components/UserRecipe';
 import Login from '../components/User/Login';
 import Register from '../components/User/Register';
 import UserMealPlans from './page_components/UserMealPlan'
-const Pages = ({handleShowMealPlan, handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, handleDeleteRecipe, handleFormSubmit, searchFilter, recipes, handleAuthorise, authorised}) => {
+const Pages = ({handleDeleteMealPlan, handleShowMealPlan, handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, handleDeleteRecipe, handleFormSubmit, searchFilter, recipes, handleAuthorise, authorised}) => {
   const location = useLocation();
   // useLocation() is required to make animatePresence works (as we are working with react-router)
   // For this, we need to imbed Routes with a key and a location (see below)
@@ -75,6 +75,7 @@ const Pages = ({handleShowMealPlan, handleUpdateMealPlan, mealPlan, handleCreate
           mealPlan={mealPlan}
           authorised={authorised}
           handleUpdateMealPlan={handleUpdateMealPlan}
+          handleDeleteMealPlan={handleDeleteMealPlan}
         />}
       />
       {/* USERS MEAL PLAN(S) PAGE */}
@@ -86,6 +87,7 @@ const Pages = ({handleShowMealPlan, handleUpdateMealPlan, mealPlan, handleCreate
           authorised={authorised}
           handleUpdateMealPlan={handleUpdateMealPlan}
           handleShowMealPlan={handleShowMealPlan}
+          handleDeleteMealPlan={handleDeleteMealPlan}
         />}
       />
       {/* USER LOGIN */}

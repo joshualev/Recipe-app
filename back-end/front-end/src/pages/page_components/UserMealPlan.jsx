@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {Box, Grid } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 
-const UserMealPlans = ({ authorised, mealPlan, handleCreateMealPlanSubmit, handleUpdateMealPlan }) => {
+const UserMealPlans = ({handleDeleteMealPlan, authorised, mealPlan, handleCreateMealPlanSubmit, handleUpdateMealPlan }) => {
 const params = useParams()
 
 const mealplan = mealPlan.filter((meal) => meal._id === params.mealPlanID)
@@ -27,19 +27,19 @@ const getMeals = async () => {
   setGeneratedPlan(data)
 
   console.log('data', data)
+
 }
 
 
 useEffect(() => {
   getMeals()  
+ 
 }, [])
 
 
 const handleSubmit = (e) => {
 e.preventDefault()      
-handleCreateMealPlanSubmit(generatedPlan)
-// handleUpdateMealPlan(mealPlan[0]._id, generatedPlan)
-// console.log('INPUT', input)
+
 }
 
 
@@ -51,11 +51,11 @@ setInput([e.target.name] = e.target.value)
     <>
     
      <div>
-          <form onSubmit={handleSubmit}>
-            {/* <input type='number' name='input' onChange={handleChange} placeholder='Target calories'></input> */}
-            <SubmitButton type="submit" value="Generate Meal Plan"/>
-          </form>
-        
+          {/* <form onSubmit={handleSubmit}> */}
+
+            <SubmitButton type="button" onClick={()=> {handleDeleteMealPlan(mealplan[0])}}value="Remove Meal Plan"/>
+          {/* </form> */}
+
         {days.map((day) => {
           return(
           
@@ -602,8 +602,8 @@ a {
 
 const SubmitButton = styled.input`
 margin-top: 1rem;
-background-color: #82B388;
-border: 1px solid #78AC7E;
+background-color: #D83818;
+border: 1px solid #6C1C0C;
 padding: 1.2rem;
 border-radius: 5px;
 font-size: 1rem;
@@ -615,7 +615,7 @@ transition: 300ms ease-in-out;
 
 &:hover {
   transform: scaleX(1.03) scaleY(1.03);
-  background-color: #8DB992;
+  background-color: #C83416;
 }
 `;
 
