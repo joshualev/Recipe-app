@@ -73,12 +73,12 @@ console.log(recipe)
                 </Typography>
                
               <CardMedia sx={{justifyContent:'center',display:'flex', pb:'0.7rem', pt:'0.2rem'}}>
-                  <Button sx={{marginRight: '1rem', width:'150px'}} color='primary' size='small' variant='contained'>
+                  {/* <Button sx={{marginRight: '1rem', width:'150px'}} color='primary' size='small' variant='contained'>
                     Add to meal plan
-                  </Button>
+                  </Button> */}
                   <Button 
-                    sx={{width:'150px'}} 
-                    color='warning' size='small' variant='contained'
+                    sx={{width:'150px', borderRadius:'5px', padding:'0.6rem'}} 
+                    color='error' size='small' variant='contained'
                     onClick={()=> {handleDeleteRecipe(recipe)}}
                   >
                     Remove from list
@@ -188,6 +188,24 @@ const ImageStyled = styled.img`
 
 const ListStyled = styled.li`
   list-style: none;
+`;
+const SubmitButton = styled.input`
+margin-top: 1rem;
+background-color: #D83818;
+border: 1px solid #6C1C0C;
+padding: 1.2rem;
+border-radius: 5px;
+font-size: 1rem;
+font-weight: 600;
+color: white;
+text-shadow: 0 0 1px black;
+box-shadow: 0 0 0.01rem black;
+transition: 300ms ease-in-out;
+
+&:hover {
+  transform: scaleX(1.03) scaleY(1.03);
+  background-color: #C83416;
+}
 `;
 
 export default UserRecipe
