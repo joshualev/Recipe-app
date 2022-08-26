@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { Container, Grid, Card, CardMedia, CardContent, CardActions, Button, Typography} from '@mui/material'
+import CookieIcon from '@mui/icons-material/Cookie';
 import {motion} from 'framer-motion';
 import styled from 'styled-components';
 const UserRecipes = ({recipes, handleDeleteRecipe, authorised}) => {

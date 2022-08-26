@@ -14,6 +14,16 @@ mealPlanRouter.get('/', async (req,res) => {
   }
 })
 
+//SHOW route
+mealPlanRouter.get('/:mealPlanID', async (req,res) => {
+  try {
+    const findMealPlan = await MealPlan.findById(req.params.mealPlanID).exec()
+    res.status(200).json(findMealPlan)
+  } catch (error) {
+    res.status(500).json({errorMessage: error.Message})
+  }
+})
+
 //CREATE Add a new recipe to saved recipes
 mealPlanRouter.post('/', async (req,res) => {
   try {

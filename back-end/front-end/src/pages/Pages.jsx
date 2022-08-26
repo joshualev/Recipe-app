@@ -8,20 +8,23 @@ import SearchResults from './page_components/SearchResults';
 import AdvancedSearchResults from './page_components/AdvancedSearchResults';
 import Recipe from './page_components/Recipe';
 import UserRecipes from './page_components/UserRecipes';
-import UserMealPlan from './page_components/UserMealPlan';
+import UserMealPlan from './page_components/UserMealPlans';
 import UserRecipe from './page_components/UserRecipe';
 import Login from '../components/User/Login';
 import Register from '../components/User/Register';
-
-const Pages = ({handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, handleDeleteRecipe, handleFormSubmit, searchFilter, recipes, handleAuthorise, authorised}) => {
+import UserMealPlans from './page_components/UserMealPlan'
+const Pages = ({handleShowMealPlan, handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, handleDeleteRecipe, handleFormSubmit, searchFilter, recipes, handleAuthorise, authorised}) => {
   const location = useLocation();
   // useLocation() is required to make animatePresence works (as we are working with react-router)
   // For this, we need to imbed Routes with a key and a location (see below)
   return (
     // <AnimatePresence> wraps all routes in pages to detect change to initiate animations on route enter/exit
   <AnimatePresence >
+ 
     <Routes Location={location} key={location.pathname}>
+      
       {/* HOME PAGE */}
+      
       <Route 
         path='/' 
         element={<Home/>}
@@ -67,11 +70,22 @@ const Pages = ({handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, hand
       {/* USERS MEAL PLAN PAGE */}
       <Route 
         path='/user/mealplan' 
-        element={<UserMealPlan
+        element={ mealPlan && <UserMealPlan
           handleCreateMealPlanSubmit={handleCreateMealPlanSubmit}
           mealPlan={mealPlan}
           authorised={authorised}
           handleUpdateMealPlan={handleUpdateMealPlan}
+        />}
+      />
+      {/* USERS MEAL PLAN(S) PAGE */}
+      <Route 
+        path='/user/mealplan/:mealPlanID' 
+        element={mealPlan && <UserMealPlans
+          handleCreateMealPlanSubmit={handleCreateMealPlanSubmit}
+          mealPlan={mealPlan}
+          authorised={authorised}
+          handleUpdateMealPlan={handleUpdateMealPlan}
+          handleShowMealPlan={handleShowMealPlan}
         />}
       />
       {/* USER LOGIN */}
@@ -88,6 +102,7 @@ const Pages = ({handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, hand
           handleAuthorise={handleAuthorise} 
           authorised={authorised}/>}
       />
+      
     </Routes>
   </AnimatePresence>
   )

@@ -90,9 +90,6 @@ useEffect(() => {
 
 // Add new meal item to meal plan list
 const handleCreateMealPlanSubmit = async(newMeal) => {
-
-  console.log('new meal', newMeal)
-  console.log('mealplan, mealplan', mealPlan)
   const response = await fetch('http://localhost:4000/meals/', {
     method: 'POST',
     headers : {
@@ -102,10 +99,9 @@ const handleCreateMealPlanSubmit = async(newMeal) => {
   })
   if (response.ok) {
     const newMealPlanResult = await response.json()
-    console.log('mealPlan Before', mealPlan)
     setMealPlan(newMealPlanResult)
-    
-    console.log('mealPlan after', mealPlan)
+    getMealPlan()
+    // navigate("/user/mealplan")
   }
 }
 
@@ -158,6 +154,10 @@ const handleDeleteRecipe = async (recipeToDelete) => {
       navigate("/user/recipes")
 }
 
+const handleShowMealPlan = async (mealPlanID) => {
+  console.log(mealPlanID)
+}
+
 
 const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
   console.log(mealPlanID)
@@ -191,6 +191,7 @@ const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
           handleCreateMealPlanSubmit={handleCreateMealPlanSubmit}
           mealPlan={mealPlan}
           handleUpdateMealPlan={handleUpdateMealPlan}
+          handleShowMealPlan={handleShowMealPlan}
        />
         }
       </Container>

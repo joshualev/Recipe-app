@@ -7,7 +7,7 @@ import {motion} from 'framer-motion';
 const AdvancedSearchResults = () => {
   const params = useParams();
   const [searchResult, setSearchResult] = useState([]);
-
+  
   const getSearch = async (recipesToGet) => {
     const response = await fetch(`
       https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}${recipesToGet}`

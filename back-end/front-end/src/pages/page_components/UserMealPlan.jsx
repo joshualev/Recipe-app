@@ -4,589 +4,588 @@ import {motion} from 'framer-motion';
 
 import styled from 'styled-components';
 import {Box, Grid } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-  const UserMealPlan = ({authorised, mealPlan, handleCreateMealPlanSubmit, handleUpdateMealPlan}) => {
-    const [generatedPlan, setGeneratedPlan] = useState({});
-    const [input, setInput] = useState(2000);
-    
-    const getMeals = async () => {
-      const response = await fetch(
-        `https://api.spoonacular.com/mealplanner/generate?targetCalories=2500&apiKey=${process.env.REACT_APP_API_KEY}`
-      );
-      const data = await response.json()
-      setGeneratedPlan(data)
-      console.log('data', data)
+const UserMealPlans = ({ authorised, mealPlan, handleCreateMealPlanSubmit, handleUpdateMealPlan }) => {
+const params = useParams()
 
-    }
+const mealplan = mealPlan.filter((meal) => meal._id === params.mealPlanID)
+
+const days = mealplan.map((day) => day.week)
+console.log('meal', days)
 
 
-    useEffect(() => {
-      getMeals()
-    }, [])
+const [generatedPlan, setGeneratedPlan] = useState({});
+const [input, setInput] = useState(2000);
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault()      
+const getMeals = async () => {
+  const response = await fetch(
+    `https://api.spoonacular.com/mealplanner/generate?targetCalories=2000&apiKey=${process.env.REACT_APP_API_KEY}`
+  );
+  const data = await response.json()
+  setGeneratedPlan(data)
 
-    handleUpdateMealPlan('630764b37e711f167204ff9c', generatedPlan)
-    console.log('INPUT', input)
-    // setInput('')
-  }
+  console.log('data', data)
+}
 
 
-  const handleChange = (e) => {
-    setInput([e.target.name] = e.target.value)
-  }
+useEffect(() => {
+  getMeals()  
+}, [])
 
-  
+
+const handleSubmit = (e) => {
+e.preventDefault()      
+handleCreateMealPlanSubmit(generatedPlan)
+// handleUpdateMealPlan(mealPlan[0]._id, generatedPlan)
+// console.log('INPUT', input)
+}
+
+
+const handleChange = (e) => {
+setInput([e.target.name] = e.target.value)
+}
 
   return (
-    
     <>
-{/* {authorised && */}
- <div>
-      <form onSubmit={handleSubmit}>
-        {/* <input type='number' name='input' onChange={handleChange} placeholder='Target calories'></input> */}
-        <SubmitButton type="submit" value="Generate Meal Plan"/>
-      </form>
     
-    {mealPlan &&
-     <motion.div
-     initial={{ y: 100, opacity: 0 }}
-       animate={{ y: 0, opacity: 1 }}
-       exit={{ opacity: 0 }}
-       transition={{duration: 0.5}}
-   >
-  
-    <MealPlanContainer>
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-  {/* MONDAY */}
-
+     <div>
+          <form onSubmit={handleSubmit}>
+            {/* <input type='number' name='input' onChange={handleChange} placeholder='Target calories'></input> */}
+            <SubmitButton type="submit" value="Generate Meal Plan"/>
+          </form>
+        
+        {days.map((day) => {
+          return(
+          
+     
+         <motion.div
+         initial={{ y: 100, opacity: 0 }}
+           animate={{ y: 0, opacity: 1 }}
+           exit={{ opacity: 0 }}
+           transition={{duration: 0.5}}
+       >
+      
+        <MealPlanContainer key={params.mealPlanID}>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+      {/* MONDAY */}
+    
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <ItemDiv>
+                  <Header>
+                    Monday
+                  </Header>
+                <MealNutrition>
+                    <div className='macros'>
+                      <div className='protein'>Calories
+                        <p>{Math.round(day.monday.nutrients.calories)}</p>
+                      </div>
+                      <div className='protein'>Protein
+                        <p>{Math.round(day.monday.nutrients.protein)}</p>
+                      </div>
+                      <div className='carbohydrates'>Carbohydate
+                        <p>{Math.round(day.monday.nutrients.carbohydrates)}</p>
+                      </div>
+                      <div className='fats'>Fat
+                        <p>{Math.round(day.monday.nutrients.fat)}</p>
+                      </div>
+                    </div>
+                  </MealNutrition>
+                  <Meals>
+                    <Meal className='breakfast'>
+                      <MealHeader>
+                        Breakfast
+                      </MealHeader>
+                      <MealContent>
+                          <h5>{day.monday.meals[0].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.monday.meals[0].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='lunch'>
+                      <MealHeader>
+                        Lunch
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.monday.meals[1].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                            <a href={day.monday.meals[1].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='dinner'>
+                      <MealHeader>
+                        Dinner
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.monday.meals[2].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.monday.meals[2].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                  </Meals>
+              </ItemDiv>
+            </Grid>
+    
+    {/* TUESDAY */}
+       
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <ItemDiv>
+                  <Header>
+                    Tuesday
+                  </Header>
+                <MealNutrition>
+                    <div className='macros'>
+                      <div className='protein'>Calories
+                        <p>{Math.round(day.tuesday.nutrients.calories)}</p>
+                      </div>
+                      <div className='protein'>Protein
+                        <p>{Math.round(day.tuesday.nutrients.protein)}</p>
+                      </div>
+                      <div className='carbohydrates'>Carbohydate
+                        <p>{Math.round(day.tuesday.nutrients.carbohydrates)}</p>
+                      </div>
+                      <div className='fats'>Fat
+                        <p>{Math.round(day.tuesday.nutrients.fat)}</p>
+                      </div>
+                    </div>
+                  </MealNutrition>
+                  <Meals>
+                    <Meal className='breakfast'>
+                      <MealHeader>
+                        Breakfast
+                      </MealHeader>
+                      <MealContent>
+                          <h5>{day.tuesday.meals[0].title}</h5>
+                      </MealContent>
+                      <MealContent>
+    
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.tuesday.meals[0].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='lunch'>
+                      <MealHeader>
+                        Lunch
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.tuesday.meals[1].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                            <a href={day.tuesday.meals[1].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='dinner'>
+                      <MealHeader>
+                        Dinner
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.tuesday.meals[2].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.tuesday.meals[2].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                  </Meals>
+              </ItemDiv>
+            </Grid>
+    
+    {/* WEDNESDAY */}
         <Grid item xs={12} sm={6} md={4} lg={4}>
-          <ItemDiv>
-              <Header>
-                Monday
-              </Header>
-            <MealNutrition>
-                <div className='macros'>
-                  <div className='protein'>Calories
-                    <p>{Math.round(mealPlan[0].week.monday.nutrients.calories)}</p>
-                  </div>
-                  <div className='protein'>Protein
-                    <p>{Math.round(mealPlan[0].week.monday.nutrients.protein)}</p>
-                  </div>
-                  <div className='carbohydrates'>Carbohydate
-                    <p>{Math.round(mealPlan[0].week.monday.nutrients.carbohydrates)}</p>
-                  </div>
-                  <div className='fats'>Fat
-                    <p>{Math.round(mealPlan[0].week.monday.nutrients.fat)}</p>
-                  </div>
-                </div>
-              </MealNutrition>
-              <Meals>
-                <Meal className='breakfast'>
-                  <MealHeader>
-                    Breakfast
-                  </MealHeader>
-                  <MealContent>
-                      <h5>{mealPlan[0].week.monday.meals[0].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.monday.meals[0].sourceUrl}>View source</a>
-                        </h3>
+              <ItemDiv>
+                  <Header>
+                    Wednesday
+                  </Header>
+                <MealNutrition>
+                    <div className='macros'>
+                      <div className='protein'>Calories
+                        <p>{Math.round(day.wednesday.nutrients.calories)}</p>
+                      </div>
+                      <div className='protein'>Protein
+                        <p>{Math.round(day.wednesday.nutrients.protein)}</p>
+                      </div>
+                      <div className='carbohydrates'>Carbohydate
+                        <p>{Math.round(day.wednesday.nutrients.carbohydrates)}</p>
+                      </div>
+                      <div className='fats'>Fat
+                        <p>{Math.round(day.wednesday.nutrients.fat)}</p>
+                      </div>
                     </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='lunch'>
-                  <MealHeader>
-                    Lunch
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.monday.meals[1].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                        <a href={mealPlan[0].week.monday.meals[1].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='dinner'>
-                  <MealHeader>
-                    Dinner
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.monday.meals[2].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.monday.meals[2].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-              </Meals>
-          </ItemDiv>
-        </Grid>
-
-{/* TUESDAY */}
-   
+                  </MealNutrition>
+                  <Meals>
+                    <Meal className='breakfast'>
+                      <MealHeader>
+                        Breakfast
+                      </MealHeader>
+                      <MealContent>
+                          <h5>{day.wednesday.meals[0].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.wednesday.meals[0].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='lunch'>
+                      <MealHeader>
+                        Lunch
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.wednesday.meals[1].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                            <a href={day.wednesday.meals[1].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='dinner'>
+                      <MealHeader>
+                        Dinner
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.wednesday.meals[2].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.wednesday.meals[2].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                  </Meals>
+              </ItemDiv>
+            </Grid>
+    {/* THURSDAY */}
         <Grid item xs={12} sm={6} md={4} lg={4}>
-          <ItemDiv>
-              <Header>
-                Tuesday
-              </Header>
-            <MealNutrition>
-                <div className='macros'>
-                  <div className='protein'>Calories
-                    <p>{Math.round(mealPlan[0].week.tuesday.nutrients.calories)}</p>
-                  </div>
-                  <div className='protein'>Protein
-                    <p>{Math.round(mealPlan[0].week.tuesday.nutrients.protein)}</p>
-                  </div>
-                  <div className='carbohydrates'>Carbohydate
-                    <p>{Math.round(mealPlan[0].week.tuesday.nutrients.carbohydrates)}</p>
-                  </div>
-                  <div className='fats'>Fat
-                    <p>{Math.round(mealPlan[0].week.tuesday.nutrients.fat)}</p>
-                  </div>
-                </div>
-              </MealNutrition>
-              <Meals>
-                <Meal className='breakfast'>
-                  <MealHeader>
-                    Breakfast
-                  </MealHeader>
-                  <MealContent>
-                      <h5>{mealPlan[0].week.tuesday.meals[0].title}</h5>
-                  </MealContent>
-                  <MealContent>
-
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.tuesday.meals[0].sourceUrl}>View source</a>
-                        </h3>
+              <ItemDiv>
+                  <Header>
+                    Thursday
+                  </Header>
+                <MealNutrition>
+                    <div className='macros'>
+                      <div className='protein'>Calories
+                        <p>{Math.round(day.thursday.nutrients.calories)}</p>
+                      </div>
+                      <div className='protein'>Protein
+                        <p>{Math.round(day.thursday.nutrients.protein)}</p>
+                      </div>
+                      <div className='carbohydrates'>Carbohydate
+                        <p>{Math.round(day.thursday.nutrients.carbohydrates)}</p>
+                      </div>
+                      <div className='fats'>Fat
+                        <p>{Math.round(day.thursday.nutrients.fat)}</p>
+                      </div>
                     </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='lunch'>
-                  <MealHeader>
-                    Lunch
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.tuesday.meals[1].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                        <a href={mealPlan[0].week.tuesday.meals[1].sourceUrl}>View source</a>
-                        </h3>
+                  </MealNutrition>
+                  <Meals>
+                    <Meal className='breakfast'>
+                      <MealHeader>
+                        Breakfast
+                      </MealHeader>
+                      <MealContent>
+                          <h5>{day.thursday.meals[0].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.thursday.meals[0].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='lunch'>
+                      <MealHeader>
+                        Lunch
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.thursday.meals[1].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                            <a href={day.thursday.meals[1].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='dinner'>
+                      <MealHeader>
+                        Dinner
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.thursday.meals[2].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.thursday.meals[2].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                  </Meals>
+              </ItemDiv>
+            </Grid>
+      {/* FRIDAY */}
+        <Grid item xs={12} sm={6} md={4} lg={4}>
+              <ItemDiv>
+                  <Header>
+                    Friday
+                  </Header>
+                <MealNutrition>
+                    <div className='macros'>
+                      <div className='protein'>Calories
+                        <p>{Math.round(day.friday.nutrients.calories)}</p>
+                      </div>
+                      <div className='protein'>Protein
+                        <p>{Math.round(day.friday.nutrients.protein)}</p>
+                      </div>
+                      <div className='carbohydrates'>Carbohydate
+                        <p>{Math.round(day.friday.nutrients.carbohydrates)}</p>
+                      </div>
+                      <div className='fats'>Fat
+                        <p>{Math.round(day.friday.nutrients.fat)}</p>
+                      </div>
                     </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='dinner'>
-                  <MealHeader>
-                    Dinner
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.tuesday.meals[2].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.tuesday.meals[2].sourceUrl}>View source</a>
-                        </h3>
+                  </MealNutrition>
+                  <Meals>
+                    <Meal className='breakfast'>
+                      <MealHeader>
+                        Breakfast
+                      </MealHeader>
+                      <MealContent>
+                          <h5>{day.friday.meals[0].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.friday.meals[0].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='lunch'>
+                      <MealHeader>
+                        Lunch
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.friday.meals[1].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                            <a href={day.friday.meals[1].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='dinner'>
+                      <MealHeader>
+                        Dinner
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.friday.meals[2].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.friday.meals[2].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                  </Meals>
+              </ItemDiv>
+            </Grid>
+      {/* SATURDAY */}
+        <Grid item xs={12} sm={6} md={4} lg={4}>
+              <ItemDiv>
+                  <Header>
+                    Saturday
+                  </Header>
+                <MealNutrition>
+                    <div className='macros'>
+                      <div className='protein'>Calories
+                        <p>{Math.round(day.saturday.nutrients.calories)}</p>
+                      </div>
+                      <div className='protein'>Protein
+                        <p>{Math.round(day.saturday.nutrients.protein)}</p>
+                      </div>
+                      <div className='carbohydrates'>Carbohydate
+                        <p>{Math.round(day.saturday.nutrients.carbohydrates)}</p>
+                      </div>
+                      <div className='fats'>Fat
+                        <p>{Math.round(day.saturday.nutrients.fat)}</p>
+                      </div>
                     </div>
-                  </MealContent>
-                  </Meal>
-              </Meals>
-          </ItemDiv>
-        </Grid>
-
-{/* WEDNESDAY */}
-    <Grid item xs={12} sm={6} md={4} lg={4}>
-          <ItemDiv>
-              <Header>
-                Wednesday
-              </Header>
-            <MealNutrition>
-                <div className='macros'>
-                  <div className='protein'>Calories
-                    <p>{Math.round(mealPlan[0].week.wednesday.nutrients.calories)}</p>
-                  </div>
-                  <div className='protein'>Protein
-                    <p>{Math.round(mealPlan[0].week.wednesday.nutrients.protein)}</p>
-                  </div>
-                  <div className='carbohydrates'>Carbohydate
-                    <p>{Math.round(mealPlan[0].week.wednesday.nutrients.carbohydrates)}</p>
-                  </div>
-                  <div className='fats'>Fat
-                    <p>{Math.round(mealPlan[0].week.wednesday.nutrients.fat)}</p>
-                  </div>
-                </div>
-              </MealNutrition>
-              <Meals>
-                <Meal className='breakfast'>
-                  <MealHeader>
-                    Breakfast
-                  </MealHeader>
-                  <MealContent>
-                      <h5>{mealPlan[0].week.wednesday.meals[0].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.wednesday.meals[0].sourceUrl}>View source</a>
-                        </h3>
+                  </MealNutrition>
+                  <Meals>
+                    <Meal className='breakfast'>
+                      <MealHeader>
+                        Breakfast
+                      </MealHeader>
+                      <MealContent>
+                          <h5>{day.saturday.meals[0].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.saturday.meals[0].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='lunch'>
+                      <MealHeader>
+                        Lunch
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.saturday.meals[1].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                            <a href={day.saturday.meals[1].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='dinner'>
+                      <MealHeader>
+                        Dinner
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.saturday.meals[2].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.saturday.meals[2].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                  </Meals>
+              </ItemDiv>
+            </Grid>
+      {/* SUNDAY */}
+        <Grid item xs={12} sm={6} md={4} lg={4}>
+              <ItemDiv>
+                  <Header>
+                    Sunday
+                  </Header>
+                <MealNutrition>
+                    <div className='macros'>
+                      <div className='protein'>Calories
+                        <p>{Math.round(day.sunday.nutrients.calories)}</p>
+                      </div>
+                      <div className='protein'>Protein
+                        <p>{Math.round(day.sunday.nutrients.protein)}</p>
+                      </div>
+                      <div className='carbohydrates'>Carbohydate
+                        <p>{Math.round(day.sunday.nutrients.carbohydrates)}</p>
+                      </div>
+                      <div className='fats'>Fat
+                        <p>{Math.round(day.sunday.nutrients.fat)}</p>
+                      </div>
                     </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='lunch'>
-                  <MealHeader>
-                    Lunch
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.wednesday.meals[1].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                        <a href={mealPlan[0].week.wednesday.meals[1].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='dinner'>
-                  <MealHeader>
-                    Dinner
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.wednesday.meals[2].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.wednesday.meals[2].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-              </Meals>
-          </ItemDiv>
-        </Grid>
-{/* THURSDAY */}
-    <Grid item xs={12} sm={6} md={4} lg={4}>
-          <ItemDiv>
-              <Header>
-                Thursday
-              </Header>
-            <MealNutrition>
-                <div className='macros'>
-                  <div className='protein'>Calories
-                    <p>{Math.round(mealPlan[0].week.thursday.nutrients.calories)}</p>
-                  </div>
-                  <div className='protein'>Protein
-                    <p>{Math.round(mealPlan[0].week.thursday.nutrients.protein)}</p>
-                  </div>
-                  <div className='carbohydrates'>Carbohydate
-                    <p>{Math.round(mealPlan[0].week.thursday.nutrients.carbohydrates)}</p>
-                  </div>
-                  <div className='fats'>Fat
-                    <p>{Math.round(mealPlan[0].week.thursday.nutrients.fat)}</p>
-                  </div>
-                </div>
-              </MealNutrition>
-              <Meals>
-                <Meal className='breakfast'>
-                  <MealHeader>
-                    Breakfast
-                  </MealHeader>
-                  <MealContent>
-                      <h5>{mealPlan[0].week.thursday.meals[0].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.thursday.meals[0].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='lunch'>
-                  <MealHeader>
-                    Lunch
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.thursday.meals[1].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                        <a href={mealPlan[0].week.thursday.meals[1].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='dinner'>
-                  <MealHeader>
-                    Dinner
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.thursday.meals[2].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.thursday.meals[2].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-              </Meals>
-          </ItemDiv>
-        </Grid>
-  {/* FRIDAY */}
-    <Grid item xs={12} sm={6} md={4} lg={4}>
-          <ItemDiv>
-              <Header>
-                Friday
-              </Header>
-            <MealNutrition>
-                <div className='macros'>
-                  <div className='protein'>Calories
-                    <p>{Math.round(mealPlan[0].week.friday.nutrients.calories)}</p>
-                  </div>
-                  <div className='protein'>Protein
-                    <p>{Math.round(mealPlan[0].week.friday.nutrients.protein)}</p>
-                  </div>
-                  <div className='carbohydrates'>Carbohydate
-                    <p>{Math.round(mealPlan[0].week.friday.nutrients.carbohydrates)}</p>
-                  </div>
-                  <div className='fats'>Fat
-                    <p>{Math.round(mealPlan[0].week.friday.nutrients.fat)}</p>
-                  </div>
-                </div>
-              </MealNutrition>
-              <Meals>
-                <Meal className='breakfast'>
-                  <MealHeader>
-                    Breakfast
-                  </MealHeader>
-                  <MealContent>
-                      <h5>{mealPlan[0].week.friday.meals[0].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.friday.meals[0].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='lunch'>
-                  <MealHeader>
-                    Lunch
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.friday.meals[1].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                        <a href={mealPlan[0].week.friday.meals[1].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='dinner'>
-                  <MealHeader>
-                    Dinner
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.friday.meals[2].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.friday.meals[2].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-              </Meals>
-          </ItemDiv>
-        </Grid>
-  {/* SATURDAY */}
-    <Grid item xs={12} sm={6} md={4} lg={4}>
-          <ItemDiv>
-              <Header>
-                Saturday
-              </Header>
-            <MealNutrition>
-                <div className='macros'>
-                  <div className='protein'>Calories
-                    <p>{Math.round(mealPlan[0].week.saturday.nutrients.calories)}</p>
-                  </div>
-                  <div className='protein'>Protein
-                    <p>{Math.round(mealPlan[0].week.saturday.nutrients.protein)}</p>
-                  </div>
-                  <div className='carbohydrates'>Carbohydate
-                    <p>{Math.round(mealPlan[0].week.saturday.nutrients.carbohydrates)}</p>
-                  </div>
-                  <div className='fats'>Fat
-                    <p>{Math.round(mealPlan[0].week.saturday.nutrients.fat)}</p>
-                  </div>
-                </div>
-              </MealNutrition>
-              <Meals>
-                <Meal className='breakfast'>
-                  <MealHeader>
-                    Breakfast
-                  </MealHeader>
-                  <MealContent>
-                      <h5>{mealPlan[0].week.saturday.meals[0].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.saturday.meals[0].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='lunch'>
-                  <MealHeader>
-                    Lunch
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.saturday.meals[1].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                        <a href={mealPlan[0].week.saturday.meals[1].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='dinner'>
-                  <MealHeader>
-                    Dinner
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.saturday.meals[2].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.saturday.meals[2].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-              </Meals>
-          </ItemDiv>
-        </Grid>
-  {/* SUNDAY */}
-    <Grid item xs={12} sm={6} md={4} lg={4}>
-          <ItemDiv>
-              <Header>
-                Sunday
-              </Header>
-            <MealNutrition>
-                <div className='macros'>
-                  <div className='protein'>Calories
-                    <p>{Math.round(mealPlan[0].week.sunday.nutrients.calories)}</p>
-                  </div>
-                  <div className='protein'>Protein
-                    <p>{Math.round(mealPlan[0].week.sunday.nutrients.protein)}</p>
-                  </div>
-                  <div className='carbohydrates'>Carbohydate
-                    <p>{Math.round(mealPlan[0].week.sunday.nutrients.carbohydrates)}</p>
-                  </div>
-                  <div className='fats'>Fat
-                    <p>{Math.round(mealPlan[0].week.sunday.nutrients.fat)}</p>
-                  </div>
-                </div>
-              </MealNutrition>
-              <Meals>
-                <Meal className='breakfast'>
-                  <MealHeader>
-                    Breakfast
-                  </MealHeader>
-                  <MealContent>
-                      <h5>{mealPlan[0].week.sunday.meals[0].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.sunday.meals[0].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='lunch'>
-                  <MealHeader>
-                    Lunch
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.sunday.meals[1].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                        <a href={mealPlan[0].week.sunday.meals[1].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-                  <Meal className='dinner'>
-                  <MealHeader>
-                    Dinner
-                  </MealHeader>
-                  <MealContent>
-                    <h5>{mealPlan[0].week.sunday.meals[2].title}</h5>
-                  </MealContent>
-                  <MealContent>
-                    <div className='calories'>
-                        <h3>
-                          <a href={mealPlan[0].week.sunday.meals[2].sourceUrl}>View source</a>
-                        </h3>
-                    </div>
-                  </MealContent>
-                  </Meal>
-              </Meals>
-          </ItemDiv>
-        </Grid>
-        </Grid> 
-    </Box> 
-    </MealPlanContainer>
-  </motion.div>
-  }
+                  </MealNutrition>
+                  <Meals>
+                    <Meal className='breakfast'>
+                      <MealHeader>
+                        Breakfast
+                      </MealHeader>
+                      <MealContent>
+                          <h5>{day.sunday.meals[0].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.sunday.meals[0].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='lunch'>
+                      <MealHeader>
+                        Lunch
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.sunday.meals[1].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                            <a href={day.sunday.meals[1].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                      <Meal className='dinner'>
+                      <MealHeader>
+                        Dinner
+                      </MealHeader>
+                      <MealContent>
+                        <h5>{day.sunday.meals[2].title}</h5>
+                      </MealContent>
+                      <MealContent>
+                        <div className='calories'>
+                            <h3>
+                              <a href={day.sunday.meals[2].sourceUrl}>View source</a>
+                            </h3>
+                        </div>
+                      </MealContent>
+                      </Meal>
+                  </Meals>
+              </ItemDiv>
+            </Grid>
+            </Grid> 
+        </Box> 
+        </MealPlanContainer>
+      </motion.div>
+       )
+      })}
   </div>
-  {/* } */}
-{/* 
-{!authorised && */}
-  {/* <Container2>
-  <StyledDiv1>You need an account to save recipes</StyledDiv1>
-    <Link to='/login' style={{textDecoration:'none'}}>
-      <StyledDiv2>Log in</StyledDiv2>
-    </Link>
-    <Link to='/register' style={{textDecoration:'none'}}>
-      <StyledDiv2>Register</StyledDiv2>
-    </Link>
-</Container2>    */}
-  {/* } */}
-    </>
-    
+  </>
   )
-}
+  }
+
+export default UserMealPlans
+
+
 const MealPlanContainer = styled.div`
 margin-top: 2rem;
 
@@ -767,4 +766,3 @@ const StyledDiv2 = styled.div`
     background-color: #8DB992;
   }
 `;
-export default UserMealPlan
