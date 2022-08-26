@@ -69,7 +69,6 @@ Sign In Page
 
 Home Page 
 (index <img width="1512" alt="indexpage" src="https://user-images.githubusercontent.com/104814228/186782904-075fe1d2-8c12-4843-b727-9e407d57892c.png">
-view)
 
 Users Recipes Page
 <img width="1502" alt="recipes" src="https://user-images.githubusercontent.com/104814228/186783285-1e5b5071-052c-4eb2-8028-27bb54c9e331.png">
