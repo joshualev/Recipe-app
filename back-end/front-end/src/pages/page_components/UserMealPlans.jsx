@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
     
     const getMeals = async () => {
       const response = await fetch(
-        `https://api.spoonacular.com/mealplanner/generate?targetCalories=2000&apiKey=${process.env.REACT_APP_API_KEY}`
+        `https://api.spoonacular.com/mealplanner/generate?targetCalories=${input}&apiKey=${process.env.REACT_APP_API_KEY}`
       );
       const data = await response.json()
       setGeneratedPlan(data)
@@ -30,7 +30,9 @@ import { Link } from 'react-router-dom';
     handleCreateMealPlanSubmit(generatedPlan)
   }
 
-console.log(mealPlan)
+
+
+
   const handleChange = (e) => {
     setInput([e.target.name] = e.target.value)
   }
@@ -49,8 +51,8 @@ console.log(mealPlan)
   </Container2>
 
   <MealPlanContainer>
-    <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2} gap={3}>
+    <Box sx={{ flexGrow: 1}}>
+        <Grid container alignItems="center"justifyContent="center" gap={3}>
         {Array.from(mealPlan).map((meal) => {
         return(  
       
@@ -70,7 +72,7 @@ console.log(mealPlan)
                     <MealNutrition>
                     <div className='macros'>
                       <div className='protein'>Average Calories per day
-                        {/* <p>{Math.round(meal.week.monday.nutrients.calories)}</p> */}
+                        <p>{Math.round(meal.week.monday.nutrients.calories)}</p>
                       </div>   
                     </div>
                   </MealNutrition>
@@ -106,6 +108,7 @@ console.log(mealPlan)
 }
 const MealPlanContainer = styled.div`
 margin: 3rem;
+justify-content: center;
 
 a {
   color: #265EBA;
