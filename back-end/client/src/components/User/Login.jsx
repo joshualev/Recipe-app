@@ -74,11 +74,11 @@ const Login = ({handleAuthorise}) => {
               <Div2></Div2>
               <Div3></Div3>
               <ImageContainer1>
-              <img src={image1}/>
+              <img src={image1} alt='image1'/>
               </ImageContainer1>
 
               <ImageContainer2>
-                <img src={image2}/>
+                <img src={image2} alt='image2'/>
               </ImageContainer2>
             </FormContainer>     
           </Container>

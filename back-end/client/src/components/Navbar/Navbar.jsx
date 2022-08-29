@@ -52,7 +52,7 @@ export default function Navbar({authorised,handleLogout}) {
   const navigate=useNavigate();
 
   const handleClickLogout =  async () => {
-    await fetch ('http://localhost:4000/user/logout', {
+    await fetch ('/user/logout', {
       method: 'POST'
     })
     handleLogout()

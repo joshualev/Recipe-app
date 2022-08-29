@@ -10,7 +10,7 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
   const navigate = useNavigate() 
   // Track state of form inputs
   const [input, setInput] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('')
+  // const [searchTerm, setSearchTerm] = useState('')
 
   const onInputChange = (e) => {
     setInput({

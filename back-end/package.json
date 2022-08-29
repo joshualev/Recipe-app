@@ -1,12 +1,10 @@
 {
   "name": "back-end",
   "version": "1.0.0",
-  "proxy": "http://localhost:4000",
   "description": "recipe app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "heroku-postbuild": "cd client && npm i && npm run build"
+    "start": "node index.js"
   },
   "author": "Joshua Levinson",
   "license": "ISC",

@@ -41,7 +41,7 @@ function App() {
   // get meal plan data
   async function getMealPlan() {
     try {
-      const response = await fetch('/meals/', {
+      const response = await fetch('/meals', {
         method: 'GET',
         headers: {
           accept: 'application.json'
@@ -63,7 +63,7 @@ function App() {
   // Get recipe data
   async function getRecipes() {
     try {
-      const response = await fetch('/', {
+      const response = await fetch('/meals', {
       method: 'GET',
       headers: {
         accept: 'application.json',
@@ -90,7 +90,7 @@ useEffect(() => {
 
 // Add new meal item to meal plan list
 const handleCreateMealPlanSubmit = async(newMeal) => {
-  const response = await fetch('/meals/', {
+  const response = await fetch('/meals', {
     method: 'POST',
     headers : {
       'Content-Type': 'application/json'
