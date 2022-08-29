@@ -4,7 +4,8 @@
   "description": "recipe app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "heroku-postbuild": "cd client && npm i && run build"
   },
   "author": "Joshua Levinson",
   "license": "ISC",
