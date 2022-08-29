@@ -31,7 +31,7 @@ function App() {
   }
 
   const checkLoginStatus = async () => {
-    const res = await fetch('http://localhost:4000/user/isauthorised')
+    const res = await fetch('/user/isauthorised')
     const data = await res.json()
     setAuthorised(data.authorised)
     console.log(authorised)
@@ -41,7 +41,7 @@ function App() {
   // get meal plan data
   async function getMealPlan() {
     try {
-      const response = await fetch('http://localhost:4000/meals/', {
+      const response = await fetch('/meals/', {
         method: 'GET',
         headers: {
           accept: 'application.json'
@@ -63,7 +63,7 @@ function App() {
   // Get recipe data
   async function getRecipes() {
     try {
-      const response = await fetch('http://localhost:4000/', {
+      const response = await fetch('/', {
       method: 'GET',
       headers: {
         accept: 'application.json',
@@ -90,7 +90,7 @@ useEffect(() => {
 
 // Add new meal item to meal plan list
 const handleCreateMealPlanSubmit = async(newMeal) => {
-  const response = await fetch('http://localhost:4000/meals/', {
+  const response = await fetch('/meals/', {
     method: 'POST',
     headers : {
       'Content-Type': 'application/json'
@@ -109,7 +109,7 @@ const handleCreateMealPlanSubmit = async(newMeal) => {
 //  Add recipe item to saved list
 const handleFormSubmit = async (newRecipe) => { 
   console.log(newRecipe)
-  const response = await fetch('http://localhost:4000/user/recipes', {
+  const response = await fetch('/user/recipes', {
     method: 'POST',
     headers : {
       'Content-Type': 'application/json'
@@ -143,7 +143,7 @@ const handleFormSubmit = async (newRecipe) => {
 }
 
 const handleDeleteRecipe = async (recipeToDelete) => { 
-    await fetch(`http://localhost:4000/user/${recipeToDelete._id}`, {
+    await fetch(`/user/${recipeToDelete._id}`, {
     method: 'DELETE',
     headers : {
       'Content-Type': 'application/json'
@@ -160,7 +160,7 @@ const handleShowMealPlan = async (mealPlanID) => {
 
 
 const handleDeleteMealPlan = async (mealPlanToDelete) => { 
-  await fetch(`http://localhost:4000/meals/${mealPlanToDelete._id}`, {
+  await fetch(`/meals/${mealPlanToDelete._id}`, {
   method: 'DELETE',
   headers : {
     'Content-Type': 'application/json'
@@ -176,7 +176,7 @@ const handleDeleteMealPlan = async (mealPlanToDelete) => {
 
 const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
   console.log(mealPlanID)
-  await fetch(`http://localhost:4000/meals/${mealPlanID}`, {
+  await fetch(`/meals/${mealPlanID}`, {
   method: 'PUT', 
   headers : {
     'Content-Type': 'application/json'
