@@ -4,10 +4,8 @@ import {useLocation, useNavigate, NavLink} from 'react-router-dom'
 
 import {motion,AnimatePresence} from 'framer-motion'
 
-
 import AdvancedSearch from './AdvancedSearch';
 import {AdvancedFilter} from './AdvancedSearchStyles'
-
 
 import styled from 'styled-components'
 import { ThemeProvider, createTheme} from '@mui/material/styles';
@@ -30,8 +28,6 @@ const theme = createTheme({
     },
   },
 });
-
-
 
 const SecondaryTheme = createTheme({
   palette: {
@@ -58,7 +54,6 @@ export default function Navbar({authorised,handleLogout}) {
     handleLogout()
   }
   
-
   const submitHandler = (e) => {
     e.preventDefault()
     navigate('/searched/'+ input)
@@ -69,12 +64,9 @@ export default function Navbar({authorised,handleLogout}) {
     setIsChecked(!isChecked)
   }
 
-  
   return( 
     <>
-
-
-      {/* Top Navbar */}
+    {/* Top Navbar */}
     <ThemeProvider theme={theme} >
       <Stack
         spacing={2} 

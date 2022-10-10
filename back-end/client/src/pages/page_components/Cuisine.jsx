@@ -4,14 +4,14 @@ import {motion} from 'framer-motion';
 import {Link, useParams} from 'react-router-dom';
 import { Container, Grid, Card, CardMedia, CardContent, Typography} from '@mui/material'
 
-const Cuisine = () => {
+const Cuisine = ({apiKey}) => {
   const params = useParams()
 
   const [cuisine, setCuisine] = useState([])
 
   const getCuisine = async (category) => {
     const response = await fetch(`
-      https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&cuisine=${category}&addRecipeNutrition=true`
+      https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&cuisine=${category}&addRecipeNutrition=true`
     );
     const data = await response.json();
     setCuisine(data.results)

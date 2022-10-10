@@ -181,29 +181,4 @@ const Categories = () => {
   )
 }
 
-const MacrosContainer = styled.div`
-  display: inline;
-  justify-content: center;
-  margin: 0 auto;
-  background: rgba(95, 194, 95, 0.7);
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-  padding: 0 0.3rem;
-  boxShadow: 0px 0.5px 0.5px rgba(95, 194, 95, 0.1);
-
-  div {
-    display: inline-block;
-    padding: 0.5rem;
-    font-weight: 600;
-    font-size: 0.8rem;
-  }
-`;
-
-const StarContainer = styled.div`
-  display: flex;
-  margin: 0.4rem 0 0 1rem;
-  font-size: 0.8rem;
-  font-weight: 200;
-`
-
 export default Categories

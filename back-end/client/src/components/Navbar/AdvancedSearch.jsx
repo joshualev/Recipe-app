@@ -10,7 +10,6 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
   const navigate = useNavigate() 
   // Track state of form inputs
   const [input, setInput] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState('')
 
   const onInputChange = (e) => {
     setInput({
@@ -18,13 +17,6 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
             [e.target.name]: e.target.value          
     })
   }
-
-  // const onSearchChange = (e) => {
-  //   setSearchTerm({
-  //     ...searchTerm,
-  //           [e.target.name]: e.target.value
-  //   })
-  // }
 
   const submitHandler = (e) => {
     let searchQuery = ''
@@ -54,7 +46,7 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
       <br/>
 
       <form onSubmit={submitHandler}>
-{/* SEARCH FIELD START*/}
+        {/* Search field*/}
         <Paper
  
           sx={{ 
@@ -73,11 +65,9 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
             <SearchIcon />
           </IconButton>
         </Paper>
-{/* SEARCH FIELD END*/}
         
-{/* CATEGORY OF CUISINE END */}
           <br/>
-{/* CALORIES AND MACRONUTRIENTS START */}
+          {/* Calories and Macronutrients */}
           <Label htmlFor='maxCalories'>Maximum Calories</Label>
           <NumberInput onChange={onInputChange} name='maxCalories=' id='calories' type='number' placeholder='Calories'/>
           
@@ -89,7 +79,6 @@ const AdvancedSearch = ({searchFilter, setSearchFilter}) => {
 
           <Label htmlFor='fat'>Fat</Label>
           <NumberInput onChange={onInputChange} name='maxFat=' id='fat' type='number' placeholder='Fat'/>
-{/* CALORIES AND MACRONUTRIENTS END */}
       </form>
     </Container>
     </Box>

@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-
-
 export const Title = styled.h2`
   font-size: 1rem;
   font-weight: 900;
@@ -11,7 +9,6 @@ export const Title = styled.h2`
   margin-bottom: 0.2rem;
 `;
 
-
 export const Label = styled.label`
   display: flex;
   justify-content: center;
@@ -19,8 +16,6 @@ export const Label = styled.label`
   font-size: 0.8rem;
   font-weight: 900;
 `;
-
-
 
 export const NumberInput = styled.input`
   box-sizing: border-box; /* Make sure that padding and width stays in place */ 
@@ -40,7 +35,6 @@ export const NumberInput = styled.input`
   }
 `;
 
-
 export const Container = styled.div`
   margin: auto;
   width: 300px;
@@ -50,7 +44,6 @@ export const Container = styled.div`
   background-color: rgba(95, 194, 95, 0.5);
   padding: 20px;
 `;
-
 
 export const AdvancedFilter = styled.div`
 display: flex;

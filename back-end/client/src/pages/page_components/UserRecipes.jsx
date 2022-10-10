@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { Container, Grid, Card, CardMedia, CardContent, CardActions, Button, Typography} from '@mui/material'
-import CookieIcon from '@mui/icons-material/Cookie';
+import { Container, Grid, Card, CardMedia, CardContent, Typography} from '@mui/material'
 import {motion} from 'framer-motion';
 import styled from 'styled-components';
 const UserRecipes = ({recipes, handleDeleteRecipe, authorised}) => {
-// // Animation used to stagger children on page enter
+// Animation used to stagger children on page enter
 const variants = {
   hidden: { opacity: 0},
   show: {
@@ -49,48 +48,38 @@ const replaceStr = (str) => {
     <Grid container spacing={3}>
       {recipes.map((recipe) => (
         <Grid item key={recipe._id} xs={12} sm={6} md={4}>  
-
-
-        <Link style={{textDecoration: 'none'}} to={`/user/recipes/${recipe._id}`}>
-          <Card
-            sx={{height: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', borderRadius:'15px', transition: 'transform 0.3s, border 0.3s',
-            '&:hover': {
-              transform: 'translateY(-2px)',
-            }, }}
-          >
-          
-            <CardContent sx={{width: '100%', height:'100%', backgroundColor:'rgba(95, 194, 95, 0.1)', boxShadow:'0px 0.5px 0.5px rgba(95, 194, 95, 0.1)'}}>
-           
-              <Typography sx ={{mr:'1.8rem', color:'black', textShadow:'0px 4px 3px rgba(0,0,0.0,0.1)'}}variant='h5' fontWeight='700' fontSize='1.2rem'>
-                {recipe.title}
-              </Typography>
-           
-            </CardContent>    
+          <Link style={{textDecoration: 'none'}} to={`/user/recipes/${recipe._id}`}>
+            <Card
+              sx={{height: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', borderRadius:'15px', transition: 'transform 0.3s, border 0.3s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+              }, }}
+            >    
+              <CardContent sx={{width: '100%', height:'100%', backgroundColor:'rgba(95, 194, 95, 0.1)', boxShadow:'0px 0.5px 0.5px rgba(95, 194, 95, 0.1)'}}> 
+                <Typography sx ={{mr:'1.8rem', color:'black', textShadow:'0px 4px 3px rgba(0,0,0.0,0.1)'}}variant='h5' fontWeight='700' fontSize='1.2rem'>
+                  {recipe.title}
+                </Typography>
+              </CardContent>    
               <StarContainer>
                 ⏰ {recipe.cookTime} minutes 
-
-               
               </StarContainer>
-           
-            <CardMedia
-              component="img"
-              image={recipe.imageURL}
-              alt={recipe.title}
-              sx={{borderRadius:'5px', width:'90%', height:'90%', m:'0.8rem auto'}}
-            />
-             <Typography level="body2" sx={{m:'auto', mt: 0.5, mb: 2 }}>
-              {recipe.calories}ilocalories
-            </Typography>
-            {/* <AddToMenu >Add to meal plan</AddToMenu> */}
-            <RemoveFromList onClick={()=> {handleDeleteRecipe(recipe)}}>Remove</RemoveFromList>
-            <MacrosContainer>
-                <div>{recipe.protein} pro</div>
-                <div>{recipe.carbohydrates} carb</div>
-                <div>{recipe.fats} fat</div>
-            </MacrosContainer>
-          </Card>
-          </Link>
-   
+              <CardMedia
+                component="img"
+                image={recipe.imageURL}
+                alt={recipe.title}
+                sx={{borderRadius:'5px', width:'90%', height:'90%', m:'0.8rem auto'}}
+              />
+              <Typography level="body2" sx={{m:'auto', mt: 0.5, mb: 2 }}>
+                {recipe.calories}ilocalories
+              </Typography>
+              <RemoveFromList onClick={()=> {handleDeleteRecipe(recipe)}}>Remove</RemoveFromList>
+              <MacrosContainer>
+                  <div>{recipe.protein} pro</div>
+                  <div>{recipe.carbohydrates} carb</div>
+                  <div>{recipe.fats} fat</div>
+              </MacrosContainer>
+              </Card>
+            </Link>
         </Grid>
       ))}
     </Grid>
@@ -125,7 +114,6 @@ const Container2 = styled.div`
   justify-content: center;
 `;
 
-
 const StyledDiv1 = styled.div`
 
   color:black;
@@ -159,7 +147,6 @@ const StyledDiv2 = styled.div`
   }
 `;
 
-
 const MacrosContainer = styled.div`
   display: flex;
   margin: 0 auto;
@@ -177,40 +164,11 @@ const MacrosContainer = styled.div`
   }
 `;
 
-
 const StarContainer = styled.div`
   display: flex;
   margin: 0.4rem 0 0 1rem;
   font-size: 0.8rem;
   font-weight: 200;
-
-`;
-const AddContainer = styled.div`
-  display: flex;
-  // postion: absolute;
-  justifyContent: start;
-  z-index: 10;
-`;
-
-const AddToMenu = styled.div`
-width: 8rem;
-margin: 1.2rem auto;
-text-align: center;
-margin-top: 1rem auto;
-background-color: #82B388;
-border: 1px solid #78AC7E;
-padding: 1.2rem;
-border-radius: 5px;
-font-size: 1rem;
-font-weight: 600;
-color: white;
-text-shadow: 0 0 1px black;
-transition: 300ms ease-in-out;
-
-&:hover {
-  transform: scaleX(1.03) scaleY(1.03);
-  background-color: #8DB992;
-}
 `;
 
 const RemoveFromList = styled.div`

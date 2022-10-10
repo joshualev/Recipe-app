@@ -13,61 +13,65 @@ import UserRecipe from './page_components/UserRecipe';
 import Login from '../components/User/Login';
 import Register from '../components/User/Register';
 import UserMealPlans from './page_components/UserMealPlan'
-const Pages = ({handleDeleteMealPlan, handleShowMealPlan, handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, handleDeleteRecipe, handleFormSubmit, searchFilter, recipes, handleAuthorise, authorised}) => {
+const Pages = ({apiKey, handleDeleteMealPlan, handleShowMealPlan, handleUpdateMealPlan, mealPlan, handleCreateMealPlanSubmit, handleDeleteRecipe, handleFormSubmit, searchFilter, recipes, handleAuthorise, authorised}) => {
   const location = useLocation();
   // useLocation() is required to make animatePresence works (as we are working with react-router)
   // For this, we need to imbed Routes with a key and a location (see below)
   return (
     // <AnimatePresence> wraps all routes in pages to detect change to initiate animations on route enter/exit
   <AnimatePresence >
- 
-    <Routes Location={location} key={location.pathname}>
-      
-      {/* HOME PAGE */}
-      
+    <Routes Location={location} key={location.pathname}>    
+      {/* Home page */}
       <Route 
         path='/' 
-        element={<Home/>}
+        element={<Home
+          apiKey={apiKey} />}
       />
-      {/* CUISINE CATEGORY TYPE */}
+      {/* Cuisine - category type show page */}
       <Route 
         path='/cuisine/:type' 
-        element={<Cuisine/>}
+        element={<Cuisine
+            apiKey={apiKey} />}
       />
-      {/* STANDARD SEARCH RESULTS */}
+      {/* Standard search results */}
       <Route 
         path='/searched/:search' 
         element={<SearchResults 
+          apiKey={apiKey} 
           handleFormSubmit={handleFormSubmit}/>}
       />
-      {/* FILTERED SEARCH RESULTS */}
+      {/* Filtered search results */}
       <Route 
         path='/searched/filter/:filterSearch' 
         element={<AdvancedSearchResults 
-          searchFilter={searchFilter}/>}
+          searchFilter={searchFilter}
+          apiKey={apiKey} />}
       />
-      {/* STANDARD RECIPE SHOW PAGE */}
+      {/* recipe catelogue - standard overview */}
       <Route 
         path='/recipe/:name' 
         element={<Recipe 
-          handleFormSubmit={handleFormSubmit}/>}
+          handleFormSubmit={handleFormSubmit}
+          apiKey={apiKey} />}
       />
-      {/* USERS RECIPES LIST */}
+      {/* user recipes overview */}
       <Route 
         path='/user/recipes' 
         element={<UserRecipes 
           handleDeleteRecipe={handleDeleteRecipe} 
           recipes={recipes}
-          authorised={authorised}/>}
+          authorised={authorised}
+          apiKey={apiKey} />}
       />
-      {/* SHOW PAGE FOR USERS RECIPES */}
+      {/* User recipes show page */}
       <Route 
         path='/user/recipes/:recipeID' 
         element={<UserRecipe 
           handleDeleteRecipe={handleDeleteRecipe} 
-          recipes={recipes}/>}
+          recipes={recipes}
+          apiKey={apiKey} />}
       />
-      {/* USERS MEAL PLAN PAGE */}
+      {/* User meals plan overview */}
       <Route 
         path='/user/mealplan' 
         element={ mealPlan && <UserMealPlan
@@ -76,9 +80,10 @@ const Pages = ({handleDeleteMealPlan, handleShowMealPlan, handleUpdateMealPlan, 
           authorised={authorised}
           handleUpdateMealPlan={handleUpdateMealPlan}
           handleDeleteMealPlan={handleDeleteMealPlan}
+          apiKey={apiKey} 
         />}
       />
-      {/* USERS MEAL PLAN(S) PAGE */}
+      {/* User meal plan show page */}
       <Route 
         path='/user/mealplan/:mealPlanID' 
         element={mealPlan && <UserMealPlans
@@ -88,23 +93,23 @@ const Pages = ({handleDeleteMealPlan, handleShowMealPlan, handleUpdateMealPlan, 
           handleUpdateMealPlan={handleUpdateMealPlan}
           handleShowMealPlan={handleShowMealPlan}
           handleDeleteMealPlan={handleDeleteMealPlan}
+          apiKey={apiKey} 
         />}
       />
-      {/* USER LOGIN */}
+      {/* User login */}
       <Route 
         path='/login' 
         element={<Login 
           handleAuthorise={handleAuthorise} 
           authorised={authorised}/>}
       />
-      {/* USER REGISTER */}
+      {/* User register */}
       <Route 
         path='/register' 
         element={<Register 
           handleAuthorise={handleAuthorise} 
           authorised={authorised}/>}
-      />
-      
+      />   
     </Routes>
   </AnimatePresence>
   )

@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "recipe app",
   "main": "index.js",
+  "engines": {
+    "node": "18.7.0"
+  },
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd client && npm i && run build"
+    "heroku-postbuild": "cd client && npm i && npm run build"
   },
   "author": "Joshua Levinson",
   "license": "ISC",

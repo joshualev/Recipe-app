@@ -5,7 +5,7 @@ import Lunch from '../../components/Main/Lunch';
 import Breakfast from '../../components/Main/Breakfast';
 import Snack from '../../components/Main/Snack';
 import Categories from '../../components/Main/Categories';
-const Home = () => {
+const Home = ({apiKey}) => {
 
   // Animation used to stagger children on page enter
   const variants = {
@@ -41,19 +41,29 @@ const Home = () => {
     >
       {/* <Popular/> */}
       <motion.div variants={item}>
-        <Categories/>
+        <Categories 
+          apiKey={apiKey}
+        />
       </motion.div>
       <motion.div variants={item}>
-        <Breakfast/>
+        <Breakfast
+          apiKey={apiKey}
+        />
       </motion.div>
       <motion.div variants={item}>
-        <Lunch/>
+        <Lunch
+          apiKey={apiKey}
+        />
       </motion.div>
       <motion.div variants={item}>
-        <Dinner/>
+        <Dinner
+          apiKey={apiKey}
+        />
       </motion.div>
       <motion.div variants={item}>
-        <Snack/>
+        <Snack
+          apiKey={apiKey}
+        />
       </motion.div>
     </motion.div>
   )

@@ -41,6 +41,11 @@ app.use('/', recipesController)
 app.use('/meals', mealPlanController)
 app.use('/user', userController)
 // ----------------------------------------------------------- //
+// Retreieve API key
+app.get('/api', (req,res) => {
+  res.json(process.env.REACT_APP_API_KEY)
+})
+// ----------------------------------------------------------- //
 // Catch all requests
 app.get("*", (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')

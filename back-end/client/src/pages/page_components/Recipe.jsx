@@ -9,22 +9,20 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Container, Card, CardMedia, Button } from '@mui/material';
+import { Container, Card, CardMedia } from '@mui/material';
 
-const Recipe = ({handleFormSubmit}) => {
+const Recipe = ({handleFormSubmit, apiKey}) => {
   const params = useParams();
   const [recipeData, setRecipeData] = useState({});
   const [nutritionData, setNutritionData] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // console.log(fields)
     handleFormSubmit({...recipeData, ...nutritionData})
-    // console.log(fields)
   }
 
   const fetchRecipe = async () => {
-    const response = await fetch (`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`)
+    const response = await fetch (`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${apiKey}`)
     const data = await response.json()
     setRecipeData(data);
       // console.log('data', data)
@@ -32,10 +30,9 @@ const Recipe = ({handleFormSubmit}) => {
 
 
   const fetchNutrition = async () => {
-    const response = await fetch (`https://api.spoonacular.com/recipes/${params.name}/nutritionWidget.json?apiKey=${process.env.REACT_APP_API_KEY}`)
+    const response = await fetch (`https://api.spoonacular.com/recipes/${params.name}/nutritionWidget.json?apiKey=${apiKey}`)
     const nutritionInfo = await response.json()
     setNutritionData(nutritionInfo);
-      // console.log('data', nutritionInfo)
   }
 
   useEffect(() => {
@@ -211,22 +208,22 @@ const ImageStyled = styled.img`
 `;
 
 const AddToListButton = styled.button`
-margin-top: 1rem;
-background-color: #82B388;
-border: 1px solid #78AC7E;
-padding: 1.2rem;
-border-radius: 5px;
-font-size: 1rem;
-font-weight: 600;
-color: white;
-text-shadow: 0 0 1px black;
-box-shadow: 0 0 0.01rem black;
-transition: 300ms ease-in-out;
+  margin-top: 1rem;
+  background-color: #82B388;
+  border: 1px solid #78AC7E;
+  padding: 1.2rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 0 1px black;
+  box-shadow: 0 0 0.01rem black;
+  transition: 300ms ease-in-out;
 
-&:hover {
-  transform: scaleX(1.03) scaleY(1.03);
-  background-color: #8DB992;
-}
+  &:hover {
+    transform: scaleX(1.03) scaleY(1.03);
+    background-color: #8DB992;
+  }
 `;
 
 

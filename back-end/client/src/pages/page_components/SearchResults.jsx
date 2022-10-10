@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import {AnimatePresence, motion} from 'framer-motion';
 import { Container, Grid, Card, CardMedia, CardContent, Typography} from '@mui/material'
 
-const SearchResults = ({handleFormSubmit}) => {
+const SearchResults = ({handleFormSubmit, apiKey}) => {
   const params = useParams();
   const [searchResult, setSearchResult] = useState([]);
 
   const getSearch = async (foodToSearch) => {
     const response = await fetch(`
-      https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${foodToSearch}&addRecipeNutrition=true`
+      https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${foodToSearch}&addRecipeNutrition=true`
     );
     const data = await response.json();
     setSearchResult(data.results)
@@ -135,12 +135,6 @@ const StarContainer = styled.div`
   IconButton{
     
   }
-`
-const AddContainer = styled.div`
-  display: flex;
-  // postion: absolute;
-  justifyContent: start;
-  z-index: 10;
 `
 
 export default SearchResults

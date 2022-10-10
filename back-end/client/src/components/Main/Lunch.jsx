@@ -7,7 +7,7 @@ import '@splidejs/react-splide/css';
 import { Link } from 'react-router-dom';
 import {Heading} from '../../globalStyles'
 
-const Lunch = () => {
+const Lunch = ({apiKey}) => {
     const [lunch, setLunch] = useState([]);
    
     const getlunch = async () => {
@@ -20,7 +20,7 @@ const Lunch = () => {
       } else {
         // else if no local storage data, fetch api as normal
         const res = await fetch(
-          `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=12&tags=lunch`
+          `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=12&tags=lunch`
           );
           const data = await res.json();
   
@@ -29,8 +29,6 @@ const Lunch = () => {
           console.log(data);
       };
     };
-
-
   
     useEffect(() => {
       getlunch()

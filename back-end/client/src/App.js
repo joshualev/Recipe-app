@@ -5,6 +5,7 @@ import Pages from './pages/Pages.jsx'
 import Navbar from './components/Navbar/Navbar'
 
 function App() {
+  const [apiKey, setApiKey] = useState()
   const [authorised, setAuthorised] = useState(null)
   const [recipes, setRecipes] = useState(null)
   const [mealPlan, setMealPlan] = useState(null)
@@ -60,6 +61,28 @@ function App() {
     }
   }
 
+  // get api key
+  async function getApiKey() {
+    try {
+      const response = await fetch('/api', {
+      method: 'GET',
+      headers: {
+        accept: 'application.json',
+      },
+    });
+    if (response.ok) {
+      const result = await response.json();
+      setApiKey(result);
+      console.log(apiKey)
+    }
+    if (!response.ok) {
+      throw new Error(`Error! status: $(response.status})`);
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+  
   // Get recipe data
   async function getRecipes() {
     try {
@@ -82,13 +105,14 @@ function App() {
 }
 
 useEffect(() => {
+  // fetch API key
+  getApiKey()
   getRecipes() 
   getMealPlan() 
   checkLoginStatus()
   // on each refresh, checks if used is authorised
  },[])
 
-// Add new meal item to meal plan list
 const handleCreateMealPlanSubmit = async(newMeal) => {
   const response = await fetch('/meals', {
     method: 'POST',
@@ -101,10 +125,8 @@ const handleCreateMealPlanSubmit = async(newMeal) => {
     const newMealPlanResult = await response.json()
     setMealPlan(newMealPlanResult)
     getMealPlan()
-    // navigate("/user/mealplan")
   }
 }
-
 
 //  Add recipe item to saved list
 const handleFormSubmit = async (newRecipe) => { 
@@ -172,8 +194,6 @@ const handleDeleteMealPlan = async (mealPlanToDelete) => {
     navigate("/user/mealplan")
 }
 
-
-
 const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
   console.log(mealPlanID)
   await fetch(`/meals/${mealPlanID}`, {
@@ -187,7 +207,6 @@ const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
     setMealPlan(mealPlan)
     navigate("/user/mealplan")
 }
-
   return (
       <Container> 
         <Navbar 
@@ -195,8 +214,9 @@ const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
           setSearchFilter={setSearchFilter}
           handleLogout={handleLogout}
           authorised={authorised} 
+          apiKey={apiKey} 
         />
-        {recipes &&
+        {recipes && apiKey &&
         <Pages 
           handleDeleteRecipe={handleDeleteRecipe} 
           handleFormSubmit={handleFormSubmit} 
@@ -208,6 +228,7 @@ const handleUpdateMealPlan = async(mealPlanID, generatedPlan) => {
           handleUpdateMealPlan={handleUpdateMealPlan}
           handleShowMealPlan={handleShowMealPlan}
           handleDeleteMealPlan={handleDeleteMealPlan}
+          apiKey={apiKey}
        />
         }
       </Container>

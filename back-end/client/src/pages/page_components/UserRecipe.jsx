@@ -65,17 +65,14 @@ console.log(recipe)
       >
           <ThemeProvider theme={theme} >
           <motion.div variants={item}>
+
             <Container disableGutters maxWidth="sm" sx={{ pb: '1rem' }}>
             <Card sx={{ maxWidth:'xs', backgroundColor:'rgba(95, 194, 95, 0.2)' }}>
                 <ImageStyled src={recipe.imageURL} alt={recipe.title} />
                 <Typography variant="h6" align="center" fontWeight='900'>
                   {recipe.title}
-                </Typography>
-               
+                </Typography>             
               <CardMedia sx={{justifyContent:'center',display:'flex', pb:'0.7rem', pt:'0.2rem'}}>
-                  {/* <Button sx={{marginRight: '1rem', width:'150px'}} color='primary' size='small' variant='contained'>
-                    Add to meal plan
-                  </Button> */}
                   <Button 
                     sx={{width:'150px', borderRadius:'5px', padding:'0.6rem'}} 
                     color='error' size='small' variant='contained'
@@ -86,6 +83,7 @@ console.log(recipe)
                   </CardMedia>
               </Card>
             </Container>
+
             <Container maxWidth="sm" align='center'>
                 <Typography variant='h2' display='inline-block' justifyContent='center' mr='1rem' pb='1rem' fontSize="0.8rem">
                   👍 {recipe.likes} people like this
@@ -99,84 +97,82 @@ console.log(recipe)
               </Container>
           </motion.div>
 
-  
           <Container disableGutters maxWidth="sm" sx={{ pb: '1rem' }}>
-          <motion.div variants={item}>
-            <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h6" fontSize='1rem'>Ingredients</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-              <ul>
-              {recipe.ingredients.map((obj) => {
-                return(
-                  <li key={obj.original}>
-                   <Typography display='inline' variant='h2' fontSize="0.8rem">
-                      {obj.original}
-                    </Typography>
-                  </li>  
-                )
-              })}
-              </ul>
-              </AccordionDetails>
-            </Accordion>
-          </motion.div>
-
-          <motion.div variants={item}>
-            <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2a-content"
-                id="panel2a-header"
-              >
-                <Typography variant="h6" fontSize='1rem'>Instructions</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-              <ul>
-                {recipe.instructions.map((obj) => {
+            <motion.div variants={item}>
+              <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography variant="h6" fontSize='1rem'>Ingredients</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                <ul>
+                {recipe.ingredients.map((obj) => {
                   return(
-                    <ListStyled key={obj.step}>
-                      <Typography display='inline' variant='h5' fontSize="0.9rem">
-                        Step {obj.number}:
+                    <li key={obj.original}>
+                    <Typography display='inline' variant='h2' fontSize="0.8rem">
+                        {obj.original}
                       </Typography>
-                      <Typography display='inline' variant='h2' fontSize="0.8rem" sx={{ml:'0.2rem'}}>
-                        {obj.step}
-                      </Typography>
-                    </ListStyled>
+                    </li>  
                   )
-                })}      
-              </ul>
-              </AccordionDetails>
-            </Accordion>
+                })}
+                </ul>
+                </AccordionDetails>
+              </Accordion>
+            </motion.div>
+
+            <motion.div variants={item}>
+              <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel2a-content"
+                  id="panel2a-header"
+                >
+                  <Typography variant="h6" fontSize='1rem'>Instructions</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                <ul>
+                  {recipe.instructions.map((obj) => {
+                    return(
+                      <ListStyled key={obj.step}>
+                        <Typography display='inline' variant='h5' fontSize="0.9rem">
+                          Step {obj.number}:
+                        </Typography>
+                        <Typography display='inline' variant='h2' fontSize="0.8rem" sx={{ml:'0.2rem'}}>
+                          {obj.step}
+                        </Typography>
+                      </ListStyled>
+                    )
+                  })}      
+                </ul>
+                </AccordionDetails>
+              </Accordion>
+            </motion.div>
+      
+            <motion.div variants={item}>
+              <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
+                <AccordionSummary sx={{ margin:'0 auto'}}
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel2a-content"
+                  id="panel2a-header"
+                >
+                  <Typography variant="h6" fontSize='1rem'>Information</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography variant='h2' fontSize="0.8rem">
+                  <div dangerouslySetInnerHTML={{__html: recipe.description}}></div>
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </motion.div>
+            </Container>
+            </ThemeProvider>
           </motion.div>
-          
-          <motion.div variants={item}>
-            <Accordion sx={{backgroundColor: 'rgba(95, 194, 95, 0.2)'}}>
-              <AccordionSummary sx={{ margin:'0 auto'}}
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2a-content"
-                id="panel2a-header"
-              >
-                 <Typography variant="h6" fontSize='1rem'>Information</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography variant='h2' fontSize="0.8rem">
-                <div dangerouslySetInnerHTML={{__html: recipe.description}}></div>
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </motion.div>
-          </Container>
-          </ThemeProvider>
-        </motion.div>
     </div>
   )
 }
-
 
 const ImageStyled = styled.img`
   width: 300px;
@@ -188,24 +184,6 @@ const ImageStyled = styled.img`
 
 const ListStyled = styled.li`
   list-style: none;
-`;
-const SubmitButton = styled.input`
-margin-top: 1rem;
-background-color: #D83818;
-border: 1px solid #6C1C0C;
-padding: 1.2rem;
-border-radius: 5px;
-font-size: 1rem;
-font-weight: 600;
-color: white;
-text-shadow: 0 0 1px black;
-box-shadow: 0 0 0.01rem black;
-transition: 300ms ease-in-out;
-
-&:hover {
-  transform: scaleX(1.03) scaleY(1.03);
-  background-color: #C83416;
-}
 `;
 
 export default UserRecipe

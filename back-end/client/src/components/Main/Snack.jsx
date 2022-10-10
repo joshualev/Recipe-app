@@ -5,7 +5,8 @@ import '@splidejs/react-splide/css';
 
 import {Heading} from '../../globalStyles'
 import {Wrapper,Card,Gradient} from './MainStyles.js';
-function Snack() {
+
+function Snack({apiKey}) {
   const [snack, setSnack] = useState([]);
   const getsnack = async () => {
     const check = localStorage.getItem('snack')
@@ -17,7 +18,7 @@ function Snack() {
     } else {
       // else if no local storage data, fetch api as normal
       const res = await fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=12&tags=snack`
+        `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=12&tags=snack`
         );
         const data = await res.json();
 

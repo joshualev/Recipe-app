@@ -4,74 +4,44 @@ import {motion} from 'framer-motion';
 
 import styled from 'styled-components';
 import {Box, Grid } from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-const UserMealPlans = ({handleDeleteMealPlan, authorised, mealPlan, handleCreateMealPlanSubmit, handleUpdateMealPlan }) => {
+const UserMealPlans = ({handleDeleteMealPlan, mealPlan, apiKey }) => {
 const params = useParams()
 
-const mealplan = mealPlan.filter((meal) => meal._id === params.mealPlanID)
-
-const days = mealplan.map((day) => day.week)
-console.log('meal', days)
-
-
 const [generatedPlan, setGeneratedPlan] = useState({});
-const [input, setInput] = useState(2000);
 
+const mealplan = mealPlan.filter((meal) => meal._id === params.mealPlanID)
+const days = mealplan.map((day) => day.week)
 
 const getMeals = async () => {
   const response = await fetch(
-    `https://api.spoonacular.com/mealplanner/generate?targetCalories=2000&apiKey=${process.env.REACT_APP_API_KEY}`
+    `https://api.spoonacular.com/mealplanner/generate?targetCalories=2000&apiKey=${apiKey}`
   );
   const data = await response.json()
   setGeneratedPlan(data)
-
-  console.log('data', data)
-
 }
-
 
 useEffect(() => {
   getMeals()  
- 
 }, [])
 
-
-const handleSubmit = (e) => {
-e.preventDefault()      
-
-}
-
-
-const handleChange = (e) => {
-setInput([e.target.name] = e.target.value)
-}
-
   return (
-    <>
-    
+    <> 
      <div>
-          {/* <form onSubmit={handleSubmit}> */}
-
-            <SubmitButton type="button" onClick={()=> {handleDeleteMealPlan(mealplan[0])}}value="Remove Meal Plan"/>
-          {/* </form> */}
-
+        <SubmitButton type="button" onClick={()=> {handleDeleteMealPlan(mealplan[0])}}value="Remove Meal Plan"/>
         {days.map((day) => {
           return(
-          
-     
-         <motion.div
+        <motion.div
          initial={{ y: 100, opacity: 0 }}
            animate={{ y: 0, opacity: 1 }}
            exit={{ opacity: 0 }}
            transition={{duration: 0.5}}
-       >
-      
+        > 
         <MealPlanContainer key={params.mealPlanID}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-      {/* MONDAY */}
-    
+          {/* MONDAY */}
             <Grid item xs={12} sm={6} md={4} lg={4}>
               <ItemDiv>
                   <Header>
@@ -142,9 +112,7 @@ setInput([e.target.name] = e.target.value)
                   </Meals>
               </ItemDiv>
             </Grid>
-    
-    {/* TUESDAY */}
-       
+            {/* TUESDAY */}
             <Grid item xs={12} sm={6} md={4} lg={4}>
               <ItemDiv>
                   <Header>
@@ -216,8 +184,7 @@ setInput([e.target.name] = e.target.value)
                   </Meals>
               </ItemDiv>
             </Grid>
-    
-    {/* WEDNESDAY */}
+        {/* WEDNESDAY */}
         <Grid item xs={12} sm={6} md={4} lg={4}>
               <ItemDiv>
                   <Header>
@@ -288,7 +255,7 @@ setInput([e.target.name] = e.target.value)
                   </Meals>
               </ItemDiv>
             </Grid>
-    {/* THURSDAY */}
+        {/* THURSDAY */}
         <Grid item xs={12} sm={6} md={4} lg={4}>
               <ItemDiv>
                   <Header>
@@ -359,7 +326,7 @@ setInput([e.target.name] = e.target.value)
                   </Meals>
               </ItemDiv>
             </Grid>
-      {/* FRIDAY */}
+        {/* FRIDAY */}
         <Grid item xs={12} sm={6} md={4} lg={4}>
               <ItemDiv>
                   <Header>
@@ -430,7 +397,7 @@ setInput([e.target.name] = e.target.value)
                   </Meals>
               </ItemDiv>
             </Grid>
-      {/* SATURDAY */}
+        {/* SATURDAY */}
         <Grid item xs={12} sm={6} md={4} lg={4}>
               <ItemDiv>
                   <Header>
@@ -501,7 +468,7 @@ setInput([e.target.name] = e.target.value)
                   </Meals>
               </ItemDiv>
             </Grid>
-      {/* SUNDAY */}
+        {/* SUNDAY */}
         <Grid item xs={12} sm={6} md={4} lg={4}>
               <ItemDiv>
                   <Header>
@@ -621,25 +588,22 @@ transition: 300ms ease-in-out;
 
 
 const ItemDiv = styled.div`
-padding: 1rem;
-text-align: center;
-border: 1px solid black;
-margin: 0 auto;
-border-radius: 5px;
-// background-color: rgba(0,0,0,0.1);
-text-shadow: 0px 4px 3px rgba(0,0,0.0,0.1);
-box-shadow: 0px 0.5px 0.5px rgba(95, 194, 95, 0.1);
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid black;
+  margin: 0 auto;
+  border-radius: 5px;
+  text-shadow: 0px 4px 3px rgba(0,0,0.0,0.1);
+  box-shadow: 0px 0.5px 0.5px rgba(95, 194, 95, 0.1);
 `;
 
 const Header = styled.div`
-font-size: 2rem;
-font-weight:900;
-color: black;
+  font-size: 2rem;
+  font-weight:900;
+  color: black;
 `;
 
 const Meals = styled.div`
-// display: flex-column;
-
 `;
 
 const Meal = styled.div`
@@ -716,53 +680,5 @@ const MealNutrition = styled.div`
     border-radius: 5px;
 
     background-color: rgba(95, 194, 95, 0.2);
-  }
-`;
-
-
-
-const Container2 = styled.div`
-  margin: 2rem auto;
-  width: 80%;
-  // background-color: rgba(95, 194, 95, 0.3);
-  border-radius: 25px;
-  padding-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-
-const StyledDiv1 = styled.div`
-
-  color:black;
-  font-size: 2.5rem;
-  font-weight: 900;
-  margin: 0 auto;
-  padding: 1rem;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 1rem;
-`;
-const StyledDiv2 = styled.div`
-  width: 6rem;
-  margin: 1.2rem;
-  text-align: center;
-  margin-top: 1rem auto;
-  background-color: #82B388;
-  border: 1px solid #78AC7E;
-  padding: 1.2rem;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  text-shadow: 0 0 1px black;
-  box-shadow: 0 0 0.01rem black;
-  transition: 300ms ease-in-out;
-
-  &:hover {
-    transform: scaleX(1.03) scaleY(1.03);
-    background-color: #8DB992;
   }
 `;

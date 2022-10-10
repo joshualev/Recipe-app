@@ -29,11 +29,6 @@ const Login = ({handleAuthorise}) => {
     handleAuthorise(data.authorised)
   }
 
-  // TODO
-  // const flashMessage={
-
-  // }
-
   return (
     <div>
     <motion.div

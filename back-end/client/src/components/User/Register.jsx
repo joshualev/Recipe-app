@@ -26,11 +26,6 @@ const Register = () => {
     console.log(data)
   }
 
-    // TODO
-    // const flashMessage={
-
-    // }
-
   return (
     <motion.div
       initial={{ y: -100,  opacity: 0 }}
