@@ -5,7 +5,7 @@
 This is a MERN app that consumes the spoonacular API to enable search on a variety of foods. Users are able to add and store recipes in a list, alternativey they can generate meal plans.
 
 Unfortunately there is no live application, as the API calls are now prohibitively limited on the free Spoonacular API.
-To view a video demo of the app, please click [here](https://INSERTLINK/)
+To view a video demo of the app, please click [here](https://www.youtube.com/watch?v=_OT4ep6mTlk)
 
 
 This app was built using:
